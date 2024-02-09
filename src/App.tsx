@@ -1,12 +1,15 @@
-import "./App.css";
-import SearchAppBar from "./SearchAppBar";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./apollo client/client.ts";
 
-function App() {
+import "./App.css";
+import { Router } from "./components/router/router.tsx";
+
+export function App() {
   return (
     <>
-      <SearchAppBar />
+      <ApolloProvider client={client}>
+        <Router />
+      </ApolloProvider>
     </>
   );
 }
-
-export default App;
