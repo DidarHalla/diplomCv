@@ -21,7 +21,7 @@ export const Auth = () => {
           ></Tab>
         </Tabs>
       </AppBar>
-      <Outlet />
+      <Outlet  />
     </>
   );
 };
