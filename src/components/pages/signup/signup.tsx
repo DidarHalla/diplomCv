@@ -1,13 +1,13 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, Button, IconButton, TextField } from "@mui/material";
-import { useCallback, useState } from "react";
 import { routes } from "../../../constants/routes";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../../apollo client/authHooks/auth.hooks";
+import { useCallback, useState } from "react";
 import { AuthUsers } from "../pages.types";
+import { useSignup } from "../../../apollo client/authHooks/auth.hooks";
 import { useForm } from "react-hook-form";
 
-export const Login = () => {
+export const Signup = () => {
   const [vision, setVision] = useState(true);
   const passwordVision = useCallback(() => {
     setVision((prev) => !prev);
@@ -24,35 +24,26 @@ export const Login = () => {
     },
   });
 
-  const [login] = useLogin();
-
   const navigation = useNavigate();
-
+  const [signup, { error, loading, data }] = useSignup();
   const submit = async ({ email, password }: AuthUsers) => {
-    const { data } = await login({
+    const { data } = await signup({
       variables: {
         auth: {
           email,
           password,
         },
       },
-      onCompleted(data) {
-        console.log(data);
-      },
     });
-
     if (data) {
-      const { user, access_token } = data.login;
-      console.log(user, access_token);
+      //   const { user, access_token } = data.signup;
       // здесь мы должны сохранить пользвателя и токен
-      // navigation(routes.root);
+      navigation(routes.root);
     }
   };
-
   return (
     <>
       <Box
-        onSubmit={handleSubmit(submit)}
         component={"form"}
         sx={{
           display: "flex",
@@ -63,7 +54,7 @@ export const Login = () => {
         }}
       >
         <h1 style={{ fontFamily: "Roboto, Helvetica, Arial, sans-serif" }}>
-          Hello!
+          Register Now
         </h1>
         <TextField
           label={"Email"}
@@ -76,7 +67,6 @@ export const Login = () => {
             },
           })}
           error={!!errors.email}
-          helperText={errors.email?.message || ""}
         />
         <TextField
           label={"Password"}
@@ -96,7 +86,6 @@ export const Login = () => {
             },
           })}
           error={!!errors.password}
-          helperText={errors.password?.message || ""}
         />
         <Button type="submit" variant="contained">
           Sign in
@@ -104,9 +93,9 @@ export const Login = () => {
         <Button
           type="button"
           sx={{ mt: 2 }}
-          onClick={() => navigation(routes.auth.signup)}
+          onClick={() => navigation(routes.auth.login)}
         >
-          {"I don't have an account"}
+          {"I have an account"}
         </Button>
       </Box>
     </>
