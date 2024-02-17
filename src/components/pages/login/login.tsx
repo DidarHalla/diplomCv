@@ -1,13 +1,16 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, Button, IconButton, TextField } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { routes } from "../../../constants/routes";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../../apollo client/authHooks/auth.hooks";
 import { AuthUsers } from "../pages.types";
 import { useForm } from "react-hook-form";
+import { useLazyQuery } from "@apollo/client";
 
-export const Login = () => {
+import { LOGIN } from "../../../apollo client/query";
+import { authResult } from "../../../apollo client/client";
+
+export const Login: React.FC = () => {
   const [vision, setVision] = useState(true);
   const passwordVision = useCallback(() => {
     setVision((prev) => !prev);
@@ -17,6 +20,7 @@ export const Login = () => {
     formState: { errors }, // state errors forms
     register,
     handleSubmit,
+    // setError,
   } = useForm({
     defaultValues: {
       email: "",
@@ -24,28 +28,28 @@ export const Login = () => {
     },
   });
 
-  const [login] = useLogin();
+  // useEffect(() => {
+  //   setError("email", { type: "validate" });
+  //   setError("password", { type: "validate" });
+  // }, [setError]);
+
+  const [login] = useLazyQuery(LOGIN);
 
   const navigation = useNavigate();
 
   const submit = async ({ email, password }: AuthUsers) => {
     const { data } = await login({
       variables: {
-        auth: {
-          email,
-          password,
-        },
-      },
-      onCompleted(data) {
-        console.log(data);
+        email,
+        password,
       },
     });
 
     if (data) {
       const { user, access_token } = data.login;
-      console.log(user, access_token);
-      // здесь мы должны сохранить пользвателя и токен
-      // navigation(routes.root);
+      authResult({ access_token, user }); // здесь сохраняем пользвателя и токен
+      localStorage.setItem("token", access_token);
+      navigation(routes.root);
     }
   };
 
@@ -55,6 +59,7 @@ export const Login = () => {
         onSubmit={handleSubmit(submit)}
         component={"form"}
         sx={{
+          marginTop: "10rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -62,9 +67,7 @@ export const Login = () => {
           gap: "1rem",
         }}
       >
-        <h1 style={{ fontFamily: "Roboto, Helvetica, Arial, sans-serif" }}>
-          Hello!
-        </h1>
+        <h1 style={{ fontFamily: "Verdana" }}>Hello!</h1>
         <TextField
           label={"Email"}
           autoFocus
@@ -76,8 +79,10 @@ export const Login = () => {
             },
           })}
           error={!!errors.email}
-          helperText={errors.email?.message || ""}
+          helperText={errors.email?.message}
         />
+
+        {/* {errors.email && <span>{errors.email.message}</span>} */}
         <TextField
           label={"Password"}
           type={vision ? "password" : "text"}
@@ -89,17 +94,18 @@ export const Login = () => {
             ),
           }}
           {...register("password", {
-            validate: (val: string) => {
+            validate: (val) => {
               if (!val) {
                 return "Enter password";
               }
             },
           })}
           error={!!errors.password}
-          helperText={errors.password?.message || ""}
+          helperText={errors.password?.message}
         />
+        {/* {errors.password && <span>{errors.password.message}</span>} */}
         <Button type="submit" variant="contained">
-          Sign in
+          Login
         </Button>
         <Button
           type="button"

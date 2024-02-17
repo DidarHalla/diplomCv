@@ -4,10 +4,12 @@ import { routes } from "../../../constants/routes";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { AuthUsers } from "../pages.types";
-import { useSignup } from "../../../apollo client/authHooks/auth.hooks";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { SIGN_NUP } from "../../../apollo client/mutation";
+import { authResult } from "../../../apollo client/client";
 
-export const Signup = () => {
+export const Signup: React.FC = () => {
   const [vision, setVision] = useState(true);
   const passwordVision = useCallback(() => {
     setVision((prev) => !prev);
@@ -25,27 +27,27 @@ export const Signup = () => {
   });
 
   const navigation = useNavigate();
-  const [signup, { error, loading, data }] = useSignup();
+  const [signup] = useMutation(SIGN_NUP);
   const submit = async ({ email, password }: AuthUsers) => {
     const { data } = await signup({
       variables: {
-        auth: {
-          email,
-          password,
-        },
+        email,
+        password,
       },
     });
     if (data) {
-      //   const { user, access_token } = data.signup;
-      // здесь мы должны сохранить пользвателя и токен
+      const { user, access_token } = data.signup;
+      authResult({ access_token, user });
       navigation(routes.root);
     }
   };
   return (
     <>
       <Box
+        onSubmit={handleSubmit(submit)}
         component={"form"}
         sx={{
+          marginTop: "10rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -53,9 +55,7 @@ export const Signup = () => {
           gap: "1rem",
         }}
       >
-        <h1 style={{ fontFamily: "Roboto, Helvetica, Arial, sans-serif" }}>
-          Register Now
-        </h1>
+        <h1 style={{ fontFamily: "Verdana" }}>Register Now</h1>
         <TextField
           label={"Email"}
           autoFocus
@@ -67,6 +67,7 @@ export const Signup = () => {
             },
           })}
           error={!!errors.email}
+          helperText={errors.email?.message}
         />
         <TextField
           label={"Password"}
@@ -86,6 +87,7 @@ export const Signup = () => {
             },
           })}
           error={!!errors.password}
+          helperText={errors.password?.message}
         />
         <Button type="submit" variant="contained">
           Sign in
