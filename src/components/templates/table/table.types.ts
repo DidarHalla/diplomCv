@@ -5,4 +5,6 @@ export interface TableProps {
     loading: boolean,
     headCells:readonly HeadCell[],
     rows:Data[] | []
+    setSearch: React.Dispatch<React.SetStateAction<string>>
+    search:string
 }

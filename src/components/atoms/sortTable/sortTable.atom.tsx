@@ -1,5 +1,5 @@
 import TableSortLabel from '@mui/material/TableSortLabel';
-import { HeadCell } from "../pages/users/users.types";
+import { HeadCell } from "../../pages/users/users.types";
 
 
 type Order = 'asc' | 'desc';

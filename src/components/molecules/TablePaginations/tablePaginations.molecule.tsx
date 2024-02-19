@@ -8,7 +8,7 @@ export function TablePaginations(props: TablePaginationsProps) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
   };
 

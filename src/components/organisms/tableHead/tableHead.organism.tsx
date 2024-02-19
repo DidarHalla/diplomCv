@@ -1,10 +1,9 @@
-import * as React from 'react';
 
 import { visuallyHidden } from '@mui/utils';
 import TableHead from '@mui/material/TableHead';
 import { Box, TableCell, TableRow } from '@mui/material';
 import { TableHeadProps } from './tableHead.types'; 
-import { SortTable } from '../../atoms/sortTable.atoms';
+import { SortTable } from '../../atoms/sortTable/sortTable.atom';
 
 
 

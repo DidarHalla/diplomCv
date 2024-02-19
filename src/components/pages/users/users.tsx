@@ -2,11 +2,11 @@ import { gql, useQuery } from "@apollo/client";
 import { User } from "cv-graphql";
 
 
-import { TableUI } from "../../templates/table/table.templates";
+import { TableUI } from "../../templates/table/table.template";
 import { Data, HeadCell } from "./users.types";
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-
+import { useState } from "react";
 
 
 
@@ -15,7 +15,6 @@ const USERS = gql`
   query Users {
     users {
       id
-      
       email
       department_name
       position_name
@@ -23,9 +22,7 @@ const USERS = gql`
         avatar  
         first_name
         last_name
-        
       }
-  
     }
   }
 `;
@@ -42,7 +39,7 @@ export function Users() {
   const headCells: readonly HeadCell[] = [
     {
       id: '0',
-      numeric: false,
+      numeric: true,
       disablePadding: false,
       label: '',
     },
@@ -83,35 +80,50 @@ export function Users() {
     first_name: string,
     last_name: string,
     email: string,
-    department_name:string,
-    position_name:string
-    
+    department_name: string,
+    position_name: string
+
   ): Data {
-    return {id:id,data:[
-      avatar,
-      first_name,
-      last_name,
-      email,
-      department_name,
-      position_name
-    ]};
+    return {
+      id: id, data: [
+        avatar,
+        first_name,
+        last_name,
+        email,
+        department_name,
+        position_name
+      ]
+    };
   }
 
-  const rows = data?.users?.map(user => {
-    return createData( user.id,  
-    <Stack direction="row" spacing={2}>
-    <Avatar src={user.profile.avatar??""}></Avatar>
 
-  </Stack>, user.profile.first_name??"", user.profile.last_name??"", user.email,user.department_name??"",user.position_name??"")
-}) ?? []
+  const rows = data?.users?.map(user => {
+    return createData(
+      user.id,
+      <Stack direction="row" spacing={2}>
+        <Avatar src={user.profile.avatar ?? ""}></Avatar>
+      </Stack>,
+      user.profile.first_name ?? "",
+      user.profile.last_name ?? "",
+      user.email, 
+      user.department_name ?? "",
+      user.position_name ?? "")
+  }) ?? []
+
+  const [search,setSearch]=useState("")
 
   if (loading) { return <>загрузка</> }
 
-  return <TableUI
-  
-    rows={rows}
-    data={data ?? { users: [] }}
-    loading={loading}
-    headCells={headCells} />
+  return (
+    <>
+      <TableUI
+        search={search}
+        setSearch={setSearch}
+        rows={rows}
+        data={data ?? { users: [] }}
+        loading={loading}
+        headCells={headCells} />
+    </>
+  )
 
 }
