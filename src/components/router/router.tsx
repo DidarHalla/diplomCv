@@ -3,7 +3,7 @@ import { routes } from "../../constants/routes";
 import { Auth } from "../pages/auth/auth";
 import { Login } from "../pages/login/login";
 import { Users } from "../pages/users/users";
-import { User } from "../pages/user/user";
+import { UserUi } from "../pages/user/UserUi";
 export const Router = () => {
   return (
     <>
@@ -17,7 +17,7 @@ export const Router = () => {
 
           <Route path={routes.users.root} element={<Users />}/>
 
-          <Route path={routes.users.user} element= {<User />}/> 
+          <Route path={routes.users.user} element= {<UserUi />}/> 
             
 
        

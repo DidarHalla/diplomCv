@@ -1,0 +1,85 @@
+.User-Profile-Page {
+  width: 60%;
+  margin: 0 auto 0;
+
+  font-family: "Gill Sans", sans-serif;
+  font-size: 20px;
+  color: #fff;
+
+  background-color: #212529;
+  padding: 100px;
+}
+
+.wrapper-user-image,
+.user-info-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+
+.user-info-inputs > div > div {
+  margin: 50px 0;
+}
+
+.user-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  object-fit: cover;
+  color: transparent;
+  text-indent: 10000px;
+}
+
+.user-image-without-image{
+  display: flex;
+  justify-content: center;
+  line-height: 2.6;
+  border-radius: 50%;
+  color: rgb(245, 245, 247);
+  background-color: rgb(189, 189, 189);
+  width: 120px;
+  height: 120px;
+  font-size: 40px;
+}
+
+.close-icon {
+  margin-bottom: 90px;
+}
+
+.upload-icon {
+  margin: 0 9px -5px 0;
+}
+
+.bottom-text-upload {
+  font-size: 15px;
+  color: #757575;
+}
+
+.user-info {
+  text-align: left;
+}
+
+.user-email,
+.member-since {
+  font-size: 15px;
+}
+
+.verified-icon {
+  margin: 0 0 -5px 5px;
+}
+
+.first-name,
+.last-name {
+  min-width: 300px !important;
+}
+
+.profile-update{
+  width: 300px;
+  height: 33px;
+}
+
+.department,
+.position {
+  min-width: 300px !important;
+}
