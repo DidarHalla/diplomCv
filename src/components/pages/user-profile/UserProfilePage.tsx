@@ -1,7 +1,6 @@
 import "./UserProfilePage.css";
 import CloseIcon from "@mui/icons-material/Close";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import UploadIcon from "@mui/icons-material/Upload";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,9 +11,13 @@ import { USER_AVATAR_DELETED } from "../../../graphql/profile";
 import { UPLOAD_AVATAR } from "../../../graphql/profile";
 import { useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import { FileUploadOutlined } from "@mui/icons-material";
+import { fileToBase64 } from "./file-to-base64.helper";
+import { useAvatarUploaded } from "./hooks.use.avatar";
 
 export const UserProfilePage = (props: { user: User } | undefined) => {
   const { userId } = useParams();
+  const [uploadAvatar, { loading: isLoading }] = useAvatarUploaded();
 
   const { user } = props;
 
@@ -28,10 +31,11 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
   const [useAvatarUpload] = useMutation<null, { avatar: UploadAvatarInput }>(
     UPLOAD_AVATAR
   );
-  const useAvatarUploaded = () => {
-    useAvatarUpload();
+  const handleUpload = (file: File) => {
+    fileToBase64(file).then((avatar) =>
+      uploadAvatar({ variables: { avatar: { userId: user.id, ...avatar } } })
+    );
   };
-
 
   console.log(user?.user.profile.avatar);
   return (
@@ -46,7 +50,10 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
                 className="user-image"
               />
             ) : (
-              <img alt={user?.user.profile.first_name[0]} className="user-image-without-image" />
+              <img
+                alt={user?.user.profile.first_name[0]}
+                className="user-image-without-image"
+              />
             )}
             {user?.user.profile.avatar ? (
               <CloseIcon onClick={useAvatarDeleted} className="close-icon" />
@@ -56,7 +63,14 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
           </div>
           <div>
             <div>
-              <UploadIcon sx={{ fontSize: 26 }} className="upload-icon" />
+              <label>
+                <FileUploadOutlined
+                  fontSize="large"
+                  sx={{ mr: 2 }}
+                  className="upload-icon"
+                  onChange={handleChange}
+                />
+              </label>
               <span>Upload avatar image</span>
             </div>
             <div>

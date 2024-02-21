@@ -3,7 +3,7 @@ import { routes } from "../../constants/routes";
 import { Auth } from "../pages/auth/auth";
 import { Login } from "../pages/login/login";
 import { Users } from "../pages/users/users";
-import { UserUi } from "../pages/user/UserUi";
+import { UserUi } from "../pages/user-profile/UserUi";
 export const Router = () => {
   return (
     <>
