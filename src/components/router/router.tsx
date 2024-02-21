@@ -17,7 +17,13 @@ export const Router = () => {
 
           <Route path={routes.users.root} element={<Users />}/>
 
-          <Route path={routes.users.user} element= {<User />}/> 
+          <Route path={routes.users.user} element= {<User />} >
+            <Route path={routes.users.profile} element={<h1>Профиль</h1>} />
+            <Route path={routes.users.skills} element={<h1>Навыки</h1>} />
+            <Route path={routes.users.languages} element={<h1>Языки</h1>} />
+            <Route path={routes.users.cvs} element={<h1>Резюме</h1>} />
+
+          </Route>
             
 
        

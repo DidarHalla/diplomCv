@@ -1,27 +1,33 @@
-import { gql,useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useNavigate, Outlet,useLocation,Navigate } from "react-router-dom";
+import { Box, Tab, Tabs } from "@mui/material";
 
-export const User=()=>{
-    const {userId}=useParams()
-    console.log(userId);
-    
-    const USER = gql`
-    query User($userId:ID!){
-        user(userId:$userId){
-          email
-          profile{
-            avatar  
-          }
-        }
-      }
-`;
-const { loading, data } = useQuery(USER,{variables:{userId:userId}});
 
-console.log(data);
+export const User = () => {
+const navigation=useNavigate()
+const location = useLocation().pathname.split("/");
 
-    return (
-        <>
-        <span>user</span>
-        </>
-    )
+  function handleClick(event: React.SyntheticEvent, newValue: string) {
+    navigation(newValue);
+  }
+
+ if(!location[3]){
+ return <Navigate to={"profile"} />
+ }
+ 
+
+  return (
+    <Box sx={{ width: '100%' }}>
+     
+      <Tabs value={location[3]} onChange={handleClick}  >
+
+        <Tab value={"profile"} label={"Профиль"} />
+        <Tab value={"skills"} label={"Навыки"} />
+        <Tab value={"languages"} label={"Языки"} />
+        <Tab value={"cvs"} label={"Резюме"} />
+
+      </Tabs>
+
+      <Outlet />
+    </Box>
+  )
 }
