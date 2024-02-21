@@ -52,7 +52,7 @@ export const Login: React.FC = () => {
       <Box
         onSubmit={handleSubmit(submit)}
         component={"form"}
-        sx={{
+        sx={{ 
           marginTop: "10rem",
           display: "flex",
           flexDirection: "column",

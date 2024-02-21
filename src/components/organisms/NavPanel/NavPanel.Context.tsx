@@ -2,7 +2,7 @@ import { createContext, useCallback, useMemo, useState } from "react";
 import {
   NavPanelConfig,
   NavPanelContextValue,
-  NavPanelProviderProps,
+  // NavPanelProviderProps,
 } from "./NavPanel. types";
 
 const defaultValue: NavPanelContextValue = {
@@ -12,7 +12,13 @@ const defaultValue: NavPanelContextValue = {
 
 export const NavPanelContext = createContext(defaultValue);
 
-export const NavPanelProvider = (children: NavPanelProviderProps) => {
+
+interface NavPanelProviderProp{
+  children:JSX.Element
+}
+
+
+export const NavPanelProvider = ({children}: NavPanelProviderProp) => {
   const [config, setConfig] = useState<NavPanelConfig>(defaultValue.config);
   const updateConfig = useCallback((config: NavPanelConfig) => {
     setConfig(config);
