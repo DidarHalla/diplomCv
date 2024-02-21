@@ -1,23 +1,22 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, Button, IconButton, TextField } from "@mui/material";
-import { useCallback, useState } from "react";
 import { routes } from "../../../constants/routes";
 import { useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
 import { AuthUsers } from "../pages.types";
 import { useForm } from "react-hook-form";
-import { useLazyQuery } from "@apollo/client";
-
-import { LOGIN } from "../../../apollo client/query";
+import { useMutation } from "@apollo/client";
+import { SIGN_NUP } from "../../../apollo client/mutation";
 import { authResult } from "../../../apollo client/client";
 
-export const Login: React.FC = () => {
+export const Signup: React.FC = () => {
   const [vision, setVision] = useState(true);
   const passwordVision = useCallback(() => {
     setVision((prev) => !prev);
   }, []);
 
   const {
-    formState: { errors },
+    formState: { errors }, // state errors forms
     register,
     handleSubmit,
   } = useForm({
@@ -27,26 +26,21 @@ export const Login: React.FC = () => {
     },
   });
 
-  const [login] = useLazyQuery(LOGIN);
-
   const navigation = useNavigate();
-
+  const [signup] = useMutation(SIGN_NUP);
   const submit = async ({ email, password }: AuthUsers) => {
-    const { data } = await login({
+    const { data } = await signup({
       variables: {
         email,
         password,
       },
     });
-
     if (data) {
-      const { user, access_token } = data.login;
-      authResult({ access_token, user }); // здесь сохраняем пользвателя и токен
-      localStorage.setItem("token", access_token);
+      const { user, access_token } = data.signup;
+      authResult({ access_token, user });
       navigation(routes.root);
     }
   };
-
   return (
     <>
       <Box
@@ -61,7 +55,7 @@ export const Login: React.FC = () => {
           gap: "1rem",
         }}
       >
-        <h1 style={{ fontFamily: "Verdana" }}>Hello!</h1>
+        <h1 style={{ fontFamily: "Verdana" }}>Register Now</h1>
         <TextField
           label={"Email"}
           autoFocus
@@ -75,7 +69,6 @@ export const Login: React.FC = () => {
           error={!!errors.email}
           helperText={errors.email?.message}
         />
-
         <TextField
           label={"Password"}
           type={vision ? "password" : "text"}
@@ -87,7 +80,7 @@ export const Login: React.FC = () => {
             ),
           }}
           {...register("password", {
-            validate: (val) => {
+            validate: (val: string) => {
               if (!val) {
                 return "Enter password";
               }
@@ -97,14 +90,14 @@ export const Login: React.FC = () => {
           helperText={errors.password?.message}
         />
         <Button type="submit" variant="contained">
-          Login
+          Sign in
         </Button>
         <Button
           type="button"
           sx={{ mt: 2 }}
-          onClick={() => navigation(routes.auth.signup)}
+          onClick={() => navigation(routes.auth.login)}
         >
-          {"I don't have an account"}
+          {"I have an account"}
         </Button>
       </Box>
     </>
