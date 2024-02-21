@@ -70,7 +70,7 @@ const navigate = useNavigate()
                         
                         <Button variant="contained" onClick={()=>{navigate(""+selected)}} sx={{display:"block", width:100+"%"}}>Профиль</Button>
                       
-                        <Button disabled={true} variant="contained" sx={{display:"block",width:100+"%"}}>Обновить пользователя</Button>
+                        <Button disabled={true}  variant="contained" sx={{display:"block",width:100+"%"}}>Обновить пользователя</Button>
                         
 
                         <Button disabled={true} variant="contained"  sx={{display:"block",width:100+"%"}}>Удалить пользователя</Button>
