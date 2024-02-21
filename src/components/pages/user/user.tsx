@@ -1,4 +1,4 @@
-import { useNavigate, Outlet, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { Box, Tab, Tabs } from "@mui/material";
 
 
@@ -10,15 +10,12 @@ export const User = () => {
     navigation(newValue);
   }
 
-  if (!location[3]) {
-    return <Navigate to={"skills"} />
-  }
 
 
   return (
     <Box sx={{ width: '100%' }}>
 
-      <Tabs value={location[3]} onChange={handleClick}  >
+      <Tabs value={location[3]??false} onChange={handleClick}  >
 
         <Tab value={"profile"} label={"Профиль"} />
         <Tab value={"skills"} label={"Навыки"} />
