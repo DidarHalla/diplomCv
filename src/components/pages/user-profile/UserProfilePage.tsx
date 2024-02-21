@@ -56,7 +56,7 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
               />
             )}
             {user?.user.profile.avatar ? (
-              <CloseIcon onClick={useAvatarDeleted} className="close-icon" />
+              <CloseIcon onClick={handleUpload} className="close-icon" />
             ) : (
               <svg></svg>
             )}
