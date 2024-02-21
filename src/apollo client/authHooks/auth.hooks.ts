@@ -13,8 +13,9 @@ export const addErrorMessage = (
   type: IErrorMessage["type"] = "info"
 ) => {
   const idErr = (id += 1);
-  errorMessage([...errorMessage(), { id, type, message }]);
+  const errors = errorMessage();
+  errorMessage([...errors, { id, type, message }]);
   setTimeout(() => {
-    errorMessage(errorMessage().filter((error) => error.id !== idErr));
+    errorMessage(errors.filter((error) => error.id !== idErr));
   }, 5000);
 };

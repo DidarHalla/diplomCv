@@ -1,6 +1,6 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, Button, IconButton, TextField } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { routes } from "../../../constants/routes";
 import { useNavigate } from "react-router-dom";
 import { AuthUsers } from "../pages.types";
@@ -17,21 +17,15 @@ export const Login: React.FC = () => {
   }, []);
 
   const {
-    formState: { errors }, // state errors forms
+    formState: { errors },
     register,
     handleSubmit,
-    // setError,
   } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
   });
-
-  // useEffect(() => {
-  //   setError("email", { type: "validate" });
-  //   setError("password", { type: "validate" });
-  // }, [setError]);
 
   const [login] = useLazyQuery(LOGIN);
 
@@ -82,7 +76,6 @@ export const Login: React.FC = () => {
           helperText={errors.email?.message}
         />
 
-        {/* {errors.email && <span>{errors.email.message}</span>} */}
         <TextField
           label={"Password"}
           type={vision ? "password" : "text"}
@@ -103,7 +96,6 @@ export const Login: React.FC = () => {
           error={!!errors.password}
           helperText={errors.password?.message}
         />
-        {/* {errors.password && <span>{errors.password.message}</span>} */}
         <Button type="submit" variant="contained">
           Login
         </Button>

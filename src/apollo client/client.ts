@@ -28,7 +28,6 @@ const authLink = setContext((_, { header }) => {
 const authError = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.forEach(({ message }) => {
-      // настроить ошибку
       addErrorMessage(message, "error");
       if (message === "Unauthorized") {
         authResult(null);
