@@ -99,7 +99,6 @@ export function TableUI(props: TableProps) {
               setOrder={setOrder}
             />
 
-<<<<<<< HEAD
             <TableBodyOrganism
               selected={selected}
               setSelected={setSelected}
@@ -124,75 +123,3 @@ export function TableUI(props: TableProps) {
     </Box>
   );
 }
-=======
-                <TableContainer>
-                    <Popover
-                        id={id}
-
-                        open={open}
-                        onClose={handleClose}
-                        anchorReference="anchorPosition"
-                        anchorPosition={anchorPos}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-
-                    >
-                        
-                        <Button variant="contained" onClick={()=>{navigate(""+selected+"/skills")}} sx={{display:"block", width:100+"%"}}>Профиль</Button>
-                      
-                        <Button disabled={true}  variant="contained" sx={{display:"block",width:100+"%"}}>Обновить пользователя</Button>
-                        
-
-                        <Button disabled={true} variant="contained"  sx={{display:"block",width:100+"%"}}>Удалить пользователя</Button>
-                        
-                    </Popover>
-
-                    <Table
-                        stickyHeader
-                        sx={{ minWidth: 750, tableLayout: "fixed" }}
-                        aria-labelledby="sticky table"
-                        size={'medium'}
-                    >
-                        <TableHeadUI
-                            headCells={headCells}
-                            order={order}
-                            orderBy={orderBy}
-                            setOrderBy={setOrderBy}
-                            setOrder={setOrder}
-
-
-                        />
-
-                        <TableBodyOrganism
-                            selected={selected}
-                            setSelected={setSelected}
-                            page={page}
-                            rows={rows}
-                            rowsPerPage={rowsPerPage}
-                            order={order}
-                            orderBy={orderBy}
-                            search={search}
-                            setAnchorPos={setAnchorPos}
-                        />
-
-                    </Table>
-                </TableContainer>
-                <TablePaginations
-                    page={page}
-                    rows={rows}
-                    rowsPerPage={rowsPerPage}
-                    setPage={setPage}
-                    setRowsPerPage={setRowsPerPage} />
-
-            </Paper>
-
-        </Box >
-    );
-}
->>>>>>> 1b51e160271f7e947d975b8f53e73266acac0ff1
