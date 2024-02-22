@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { UserFormValues, UserProps } from "./forms.types";
-import { useUpdateUser } from "../../../../hooks/use-users";
-import { useUpdateProfile } from "../../../../hooks/use-profile";
+import { useUpdateUser } from "../../../hooks/use-users";
+import { useUpdateProfile } from "../../../hooks/use-profile";
 import {
   Button,
   DialogActions,
@@ -9,9 +9,9 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { DepartamentSelect } from "../../../molecules/department-select/department-select";
-import { PositionSelect } from "../../../molecules/position-select/position-select";
-import { dialogHelpers } from "../../../../helpers/form/form.helper";
+import { DepartamentSelect } from "../../molecules/department-select/department-select";
+import { PositionSelect } from "../../molecules/position-select/position-select";
+import { dialogHelpers } from "../../../helpers/form/form.helper";
 
 export const Form = ({
   text = "Update user",

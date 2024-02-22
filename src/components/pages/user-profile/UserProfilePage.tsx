@@ -28,9 +28,6 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
     useAvatarDelete({ variables: { avatar: { userId: userId ?? "" } } });
   };
 
-  const [useAvatarUpload] = useMutation<null, { avatar: UploadAvatarInput }>(
-    UPLOAD_AVATAR
-  );
   const handleUpload = (file: File) => {
     fileToBase64(file).then((avatar) =>
       uploadAvatar({ variables: { avatar: { userId: user.id, ...avatar } } })
@@ -56,7 +53,7 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
               />
             )}
             {user?.user.profile.avatar ? (
-              <CloseIcon onClick={useAvatarDeleted} className="close-icon" />
+              <CloseIcon onClick={handleUpload} className="close-icon" />
             ) : (
               <svg></svg>
             )}
@@ -68,7 +65,7 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
                   fontSize="large"
                   sx={{ mr: 2 }}
                   className="upload-icon"
-                  onChange={handleChange}
+                  onChange={() => handleUpload}
                 />
               </label>
               <span>Upload avatar image</span>
