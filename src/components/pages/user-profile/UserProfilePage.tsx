@@ -6,20 +6,22 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { InputLabel } from "@mui/material";
-import { DeleteAvatarInput, UploadAvatarInput, User } from "cv-graphql";
+import { DeleteAvatarInput, User } from "cv-graphql";
 import { USER_AVATAR_DELETED } from "../../../graphql/profile";
-import { UPLOAD_AVATAR } from "../../../graphql/profile";
 import { useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { FileUploadOutlined } from "@mui/icons-material";
 import { fileToBase64 } from "./file-to-base64.helper";
 import { useAvatarUploaded } from "./hooks.use.avatar";
+import * as Styled from "./avatar-upload.styles";
+import { ChangeEvent } from "react";
 
 export const UserProfilePage = (props: { user: User } | undefined) => {
-  const { userId } = useParams();
+  const { userId = " " } = useParams();
   const [uploadAvatar, { loading: isLoading }] = useAvatarUploaded();
 
   const { user } = props;
+  const userAdmin: boolean = true
 
   const [useAvatarDelete] = useMutation<null, { avatar: DeleteAvatarInput }>(
     USER_AVATAR_DELETED
@@ -27,14 +29,22 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
   const useAvatarDeleted = () => {
     useAvatarDelete({ variables: { avatar: { userId: userId ?? "" } } });
   };
+  
 
   const handleUpload = (file: File) => {
     fileToBase64(file).then((avatar) =>
-      uploadAvatar({ variables: { avatar: { userId: user.id, ...avatar } } })
+      uploadAvatar({ variables: { avatar: { userId: userId, ...avatar } } })
     );
   };
+  
 
-  console.log(user?.user.profile.avatar);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files) {
+      handleUpload(files[0]);
+    }
+  };
+
   return (
     <>
       <div className="User-Profile-Page">
@@ -55,7 +65,7 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
             {user?.user.profile.avatar ? (
               <CloseIcon onClick={useAvatarDeleted} className="close-icon" />
             ) : (
-              <svg></svg>
+              <svg className="svg-unavailable"></svg>
             )}
           </div>
           <div>
@@ -65,7 +75,13 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
                   fontSize="large"
                   sx={{ mr: 2 }}
                   className="upload-icon"
-                  onChange={() => handleUpload}
+                />
+                <Styled.Input
+                  type="file"
+                  accept=".png, .jpg, .jpeg, .gif"
+                  size={500}
+                  disabled={isLoading}
+                  onChange={handleChange}
                 />
               </label>
               <span>Upload avatar image</span>
@@ -85,7 +101,9 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
           <div>
             {" "}
             <span className="user-email">{user?.user.email}</span>
+            {userAdmin ? (
             <VerifiedIcon className="verified-icon" />
+            ) : <svg className="svg-unavailable"></svg>}
           </div>
           <div>
             {" "}
@@ -112,7 +130,6 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
                   labelId="demo-select-small-label"
                   id="demo-select-small"
                   label="Department"
-                  style={{ color: "white" }}
                   defaultValue={user?.user.department_name}
                 >
                   <MenuItem>No department</MenuItem>
@@ -144,7 +161,6 @@ export const UserProfilePage = (props: { user: User } | undefined) => {
                 <Select
                   labelId="demo-select-small-label"
                   id="demo-select-small"
-                  style={{ color: "white" }}
                   defaultValue={user?.user.position_name}
                   label="Position"
                 >
