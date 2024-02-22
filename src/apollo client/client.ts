@@ -9,6 +9,7 @@ import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import { AuthResult } from "cv-graphql";
 import { addErrorMessage } from "./authHooks/auth.hooks";
+import { tokenVar } from "../components/features/checkRegistr/checkRegistr";
 
 const httpLink = createHttpLink({
   uri: "https://cv-project-js.inno.ws/api/graphql",
@@ -20,7 +21,7 @@ const authLink = setContext((_, { header }) => {
   return {
     headers: {
       ...header,
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${tokenVar()}`,
     },
   };
 });

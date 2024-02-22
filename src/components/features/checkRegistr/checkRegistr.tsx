@@ -1,9 +1,14 @@
-import { useReactiveVar } from "@apollo/client";
+import { makeVar, useReactiveVar } from "@apollo/client";
 import { Navigate, Outlet } from "react-router-dom";
-import { authResult } from "../../../apollo client/client";
+
+export const tokenVar = makeVar("");
 
 export const CheckRegistr: React.FC = () => {
-  const authToken = useReactiveVar(authResult);
+  const token = localStorage.getItem("token");
+
+  tokenVar(token ?? "");
+
+  const authToken = useReactiveVar(tokenVar);
 
   if (authToken) {
     return <Outlet />;

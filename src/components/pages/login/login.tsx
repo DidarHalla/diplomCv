@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { useLazyQuery } from "@apollo/client";
 
 import { LOGIN } from "../../../apollo client/query";
-import { authResult } from "../../../apollo client/client";
 
 export const Login: React.FC = () => {
   const [vision, setVision] = useState(true);
@@ -41,7 +40,8 @@ export const Login: React.FC = () => {
 
     if (data) {
       const { user, access_token } = data.login;
-      authResult({ access_token, user }); // здесь сохраняем пользвателя и токен
+
+      localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", access_token);
       navigation(routes.root);
     }
@@ -52,7 +52,7 @@ export const Login: React.FC = () => {
       <Box
         onSubmit={handleSubmit(submit)}
         component={"form"}
-        sx={{ 
+        sx={{
           marginTop: "10rem",
           display: "flex",
           flexDirection: "column",

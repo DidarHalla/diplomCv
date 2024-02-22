@@ -58,7 +58,7 @@ export const Form = ({
             },
           },
         }),
-      ]).then();
+      ]).then(closeDialog);
       //   return
     }
   };
@@ -100,7 +100,7 @@ export const Form = ({
           <PositionSelect name="positionId" />
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" color="secondary" onClick={}>
+          <Button variant="outlined" color="secondary" onClick={closeDialog}>
             {"Cancel"}
           </Button>
           <Button
