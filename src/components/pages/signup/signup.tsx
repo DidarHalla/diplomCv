@@ -7,7 +7,7 @@ import { AuthUsers } from "../pages.types";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { SIGN_NUP } from "../../../apollo client/mutation";
-import { authResult } from "../../../apollo client/client";
+import { authReactive } from "../../../graphql/authReactive/authReactive";
 
 export const Signup: React.FC = () => {
   const [vision, setVision] = useState(true);
@@ -37,7 +37,7 @@ export const Signup: React.FC = () => {
     });
     if (data) {
       const { user, access_token } = data.signup;
-      authResult({ access_token, user });
+      authReactive.setAuth(access_token,user)
       navigation(routes.root);
     }
   };
