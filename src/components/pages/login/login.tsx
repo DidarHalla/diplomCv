@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useLazyQuery } from "@apollo/client";
 
 import { LOGIN } from "../../../apollo client/query";
+import { authReactive } from "../../../graphql/authReactive/authReactive";
 
 export const Login: React.FC = () => {
   const [vision, setVision] = useState(true);
@@ -41,8 +42,8 @@ export const Login: React.FC = () => {
     if (data) {
       const { user, access_token } = data.login;
 
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", access_token);
+      authReactive.setAuth(access_token,user)
+
       navigation(routes.root);
     }
   };

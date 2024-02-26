@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@mui/material";
 
 import { routes } from "../../../constants/routes";
 import { LinkPanel } from "../../atoms/link/linkPanel";
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { NavPanelContext } from "./NavPanel.Context";
 import { HomeOutlined } from "@mui/icons-material";
@@ -52,6 +52,7 @@ export const NavPanel: React.FC = () => {
           );
         })}
       </Breadcrumbs>
+      <Outlet />
     </>
   );
 };

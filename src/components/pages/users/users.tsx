@@ -111,7 +111,8 @@ export function Users() {
   }) ?? []
 
   const [search,setSearch]=useState("")
-
+  console.log(2);
+  
   if (loading) { return <>загрузка</> }
 
   return (
