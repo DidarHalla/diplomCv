@@ -13,7 +13,7 @@ import { DepartamentSelect } from "../../molecules/department-select/department-
 import { PositionSelect } from "../../molecules/position-select/position-select";
 import { dialogHelpers } from "../../../helpers/form/form.helper";
 
-export const Form = ({
+export const User = ({
   text = "Update user",
   textBtn = "Update",
   user,
@@ -40,7 +40,7 @@ export const Form = ({
     handleSubmit,
   } = properties;
 
-  const [updateUser, { loading: updating }] = useUpdateUser();
+  const [updateUser, { loading: load }] = useUpdateUser();
   const [updateProfile] = useUpdateProfile();
 
   const submit = ({ profile, departmentId, positionId }: UserFormValues) => {
@@ -59,7 +59,7 @@ export const Form = ({
           },
         }),
       ]).then(closeDialog);
-      //   return
+      return;
     }
   };
 
@@ -67,7 +67,18 @@ export const Form = ({
     <FormProvider {...properties}>
       <form onSubmit={handleSubmit(submit)}>
         <DialogTitle>{text}</DialogTitle>
-        <DialogContent>
+        <DialogContent
+          sx={{
+            overflowY: "auto",
+            paddingRight: "24px",
+            paddingBottom: "20px",
+            paddingLeft: "24px",
+            display: "grid",
+            gridTemplateColumns: "1fr" + " 1fr",
+            gap: "32px",
+            paddingTop: "16px" + " !important",
+          }}
+        >
           <TextField
             {...register("auth.email", {
               validate: (val: string) => {
@@ -107,7 +118,7 @@ export const Form = ({
             variant="contained"
             color="primary"
             type="submit"
-            disabled={updating || !isDirty}
+            disabled={load || !isDirty}
           >
             {textBtn}
           </Button>
@@ -117,7 +128,7 @@ export const Form = ({
   );
 };
 
-export const useFormDialog = dialogHelpers<UserProps>(
-  (props) => () => <Form {...props} />,
+export const useUserDialog = dialogHelpers<UserProps>(
+  (props) => () => <User {...props} />,
   { maxWidth: "md", fullWidth: true }
 );

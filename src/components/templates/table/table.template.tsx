@@ -11,6 +11,8 @@ import { TableBodyOrganism } from "../../organisms/tableBody/tableBody.organism"
 import { SearchTable } from "../../atoms/searchTable/searchTable.atom";
 import { Button, Popover } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useUserDialog } from "../../organisms/forms/forms";
+import { useUser } from "../../../hooks/use-users";
 
 type Order = "asc" | "desc";
 
@@ -30,14 +32,21 @@ export function TableUI(props: TableProps) {
   const handleClose = () => {
     setSelected(null);
   };
-
+  const [openUserDialog] = useUserDialog();
   const open = Boolean(selected);
 
   const id = open ? "simple-popover" : undefined;
+  const userId: string = JSON.parse(localStorage.getItem("user") ?? "null").id;
+  const is_verified = +userId === selected;
 
+  const { user } = useUser(userId);
   if (loading) {
     return <>Загрузка</>;
   }
+
+  const handleUpdate = () => {
+    openUserDialog({ user });
+  };
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -70,9 +79,10 @@ export function TableUI(props: TableProps) {
               Профиль
             </Button>
             <Button
-              disabled={true}
+              disabled={!is_verified}
               variant="contained"
               sx={{ display: "block", width: 100 + "%" }}
+              onClick={handleUpdate}
             >
               Обновить пользователя
             </Button>{" "}

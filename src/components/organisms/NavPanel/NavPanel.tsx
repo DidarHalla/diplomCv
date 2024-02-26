@@ -3,20 +3,39 @@ import { Breadcrumbs } from "@mui/material";
 import { routes } from "../../../constants/routes";
 import { LinkPanel } from "../../atoms/link/linkPanel";
 import { useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { NavPanelContext } from "./NavPanel.Context";
 import { HomeOutlined } from "@mui/icons-material";
+import { NavPanelConfig } from "./NavPanel. types";
+
+const useNavPanel = (config: NavPanelConfig, path) => {
+  const context = useContext(NavPanelContext);
+  useEffect(() => {
+    context.updateConfig(config);
+  }, [path]);
+  return null;
+};
 
 export const NavPanel: React.FC = () => {
-  const links = useLocation()
-    .pathname.split("/")
-    .filter((link) => link)
-    .map((name, index, array) => ({
-      name,
-      to: "/" + array.slice(0, index + 1).join("/"),
-    }));
-
   const { config } = useContext(NavPanelContext);
+  const obj: NavPanelConfig = {};
+  const navPath = useLocation();
+  const links = navPath.pathname
+    .split("/")
+    .filter((link) => link)
+    .map((name, index, array) => {
+      return {
+        name,
+        to: "/" + array.slice(0, index + 1).join("/"),
+      };
+    });
+
+  links.forEach((v) => {
+    obj[v.to] = { text: v.name, to: v.to };
+  });
+
+  useNavPanel(obj, navPath);
+
   return (
     <>
       <Breadcrumbs separator=">">
@@ -24,10 +43,11 @@ export const NavPanel: React.FC = () => {
           Home
         </LinkPanel>
         {links.map(({ name, to }) => {
-          const repl = config[to];
+          const option = config[to];
+
           return (
-            <LinkPanel to={repl?.to || to} key={name}>
-              {repl?.text}
+            <LinkPanel to={option?.to || to} key={name}>
+              {option?.text}
             </LinkPanel>
           );
         })}

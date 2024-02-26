@@ -7,14 +7,42 @@ export const LOGIN = gql`
       user {
         id
         email
+        is_verified
         profile {
           id
+          first_name
+          last_name
           full_name
           avatar
         }
-        role
-        is_verified
       }
+    }
+  }
+`;
+
+export const USER = gql`
+  query User($userId: ID!) {
+    user(userId: $userId) {
+      id
+      created_at
+      email
+      profile {
+        id
+        first_name
+        last_name
+        full_name
+        avatar
+      }
+      department {
+        id
+        name
+      }
+      position {
+        id
+        name
+      }
+      is_verified
+      role
     }
   }
 `;
