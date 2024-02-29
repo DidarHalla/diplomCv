@@ -104,7 +104,7 @@ export const User = ({
                 }
               },
             })}
-            label="Email"
+            label={loading ? "Email" : ""}
             disabled
             error={!!errors.auth?.email}
             helperText={errors.auth?.email?.message}
@@ -117,13 +117,19 @@ export const User = ({
                 }
               },
             })}
-            label="Password"
+            label={loading ? "Password" : ""}
             disabled
             error={!!errors.auth?.password}
             helperText={errors.auth?.password?.message}
           />
-          <TextField {...register("profile.first_name")} label={"First Name"} />
-          <TextField {...register("profile.last_name")} label={"Last Name"} />
+          <TextField
+            {...register("profile.first_name")}
+            label={loading ? "First Name" : ""}
+          />
+          <TextField
+            {...register("profile.last_name")}
+            label={loading ? "Last Name" : ""}
+          />
           <DepartamentSelect name="departmentId" />
           <PositionSelect name="positionId" />
         </DialogContent>
