@@ -12,7 +12,6 @@ function debounce<T extends React.ChangeEvent<HTMLInputElement | HTMLTextAreaEle
     return (even:T) => {
       clearTimeout(timer);
       timer = setTimeout(() => { func(even); }, timeout);
-      console.log(timer);
       
     };
   }

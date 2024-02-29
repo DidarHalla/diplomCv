@@ -10,7 +10,7 @@ import { Data } from "../../pages/users/users.types";
 
 export const TableBodyOrganism = (props: TableBodyProps) => {
 
-    const { selected, setSelected, page, rows, rowsPerPage, order, orderBy,search,setAnchorPos } = props
+    const { selected, setSelected, page, rows, rowsPerPage, order, orderBy,search,setAnchorPos,data} = props
    
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -26,11 +26,9 @@ export const TableBodyOrganism = (props: TableBodyProps) => {
                         data:row.slice(0,row.length-1)
                     }
                 })
-                
-                
                 return filtered
             },
-              [order, orderBy, page, rowsPerPage,search]
+              [order, orderBy, page, rowsPerPage, search, data]
         )
 
     const sortedRows = useMemo(
@@ -39,7 +37,7 @@ export const TableBodyOrganism = (props: TableBodyProps) => {
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
-        [order, orderBy, page, rowsPerPage,search]
+        [order, orderBy, page, rowsPerPage,search, data]
     );
    
 
@@ -48,7 +46,7 @@ export const TableBodyOrganism = (props: TableBodyProps) => {
             {sortedRows.map((row) => {
                
                 return (
-                    <TableRowsMolecule setAnchorPos={setAnchorPos} setSelected={setSelected} row={row} selected={selected} >
+                    <TableRowsMolecule key={row.id} setAnchorPos={setAnchorPos} setSelected={setSelected} row={row} selected={selected} >
                         {row.data.map((cell, ind) => {
                             return <TableCell key={ind} align="right" >{cell}</TableCell>
                         })}
