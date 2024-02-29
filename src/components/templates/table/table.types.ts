@@ -7,5 +7,5 @@ export interface TableProps {
   rows: Data[] | [];
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   search: string;
-  userId: string;
+  userId?: string;
 }

@@ -10,7 +10,7 @@ import { TablePaginations } from "../../molecules/TablePaginations/tablePaginati
 import { TableBodyOrganism } from "../../organisms/tableBody/tableBody.organism";
 import { SearchTable } from "../../atoms/searchTable/searchTable.atom";
 
-import { UsersTable } from "../../dialogs/usersTable.dialog";
+import { UsersTableBtn } from "../../dialogs/usersTable.dialog";
 
 type Order = "asc" | "desc";
 
@@ -35,10 +35,11 @@ export function TableUI(props: TableProps) {
         <SearchTable setSearch={setSearch} search={search} />
 
         <TableContainer>
-          <UsersTable
+          <UsersTableBtn
             anchorPos={anchorPos}
             selected={selected}
             setSelected={setSelected}
+            userId={userId}
           />
 
           <Table

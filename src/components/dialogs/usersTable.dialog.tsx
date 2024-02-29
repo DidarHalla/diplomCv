@@ -1,38 +1,32 @@
 import { Button, Popover } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { useUserDialog } from "../organisms/forms/forms"; 
-import { useUser } from "../../hooks/use-users"; 
+import { useUserDialog } from "../organisms/forms/formUser";
 
-type UsersTableProps ={
-    setSelected:React.Dispatch<React.SetStateAction<number | null>>
+type UsersTableProps = {
+  setSelected: React.Dispatch<React.SetStateAction<number | null>>;
 
-    selected:number | null
-    anchorPos:{
-        top: number;
-        left: number;
-    }
+  selected: number | null;
+  anchorPos: {
+    top: number;
+    left: number;
+  };
+  userId?: string | undefined;
+};
 
-}
-
-export const UsersTable = (props:UsersTableProps) => {
-  const {selected,setSelected,anchorPos}=  props
+export const UsersTableBtn = (props: UsersTableProps) => {
+  const { selected, setSelected, anchorPos, userId } = props;
   const [openUserDialog] = useUserDialog();
-
- 
 
   const navigate = useNavigate();
 
   const open = Boolean(selected);
 
-  const userId: string = JSON.parse(localStorage.getItem("user") ?? "null").id;
-
-  const { user } = useUser(userId);
-  const is_verified = +userId === selected;
+  const is_verified = +(userId ?? -1) === selected;
   const id = open ? "simple-popover" : undefined;
-  
+
   const handleUpdate = () => {
-    openUserDialog({ user });
+    openUserDialog({ userId });
   };
   const handleClose = () => {
     setSelected(null);
@@ -56,7 +50,6 @@ export const UsersTable = (props:UsersTableProps) => {
       <Button
         variant="contained"
         onClick={() => {
-            
           navigate("" + selected);
         }}
         sx={{ display: "block", width: 100 + "%" }}
