@@ -1,24 +1,20 @@
-import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { UserProfilePage } from "./UserProfilePage";
-import { User } from "cv-graphql";
-import { USER } from "../../../graphql/user";
+import { useUser } from "../../../hooks/use-users";
+
+
 
 export const UserUi = () => {
   const { userId } = useParams();
+  const { user, loading } = useUser(userId)
 
-  
-  const { loading, data } = useQuery<{ user: User }>(USER, {
-    variables: { userId: userId },
-  });
-
-  if (loading) {
-    return <div>zagruzka...</div>;
+  if (loading || !user) {
+    return <div>Загрузка...</div>;
   }
+  
   return (
     <>
-      <UserProfilePage user={data} />
-      <span>user</span>
+      <UserProfilePage user={user} />
     </>
   );
 };
