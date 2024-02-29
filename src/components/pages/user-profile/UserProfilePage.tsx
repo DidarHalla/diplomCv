@@ -76,7 +76,6 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
     },
   });
   const { formState, register, handleSubmit, reset } = methods;
-  console.log(user);
 
   const onSubmit = ({
     profile,
@@ -103,6 +102,9 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
         },
       }),
     ]).then(() => reset({ profile, position, department }));
+    console.log(user);
+
+    return;
   };
 
   return (
@@ -195,7 +197,7 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
                   <FormControl>
                     <InputLabel htmlFor="department">Department</InputLabel>
                     <Select
-                      name="department"
+                      name="departmentId"
                       labelId="department"
                       id="department"
                       label="Department"
@@ -225,7 +227,7 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
                     <Select
                       labelId="demo-select-small-label"
                       id="demo-select-small"
-                      name="position"
+                      name="positionId"
                       label="Position"
                     >
                       <MenuItem>No position</MenuItem>

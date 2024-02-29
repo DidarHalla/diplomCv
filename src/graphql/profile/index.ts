@@ -35,18 +35,8 @@ export const UPDATE_USER = gql`
 `;
 
 export const UPDATE_PROFILE = gql`
-  mutation UpdateProfile(
-    $userId: String!
-    $first_name: String
-    $last_name: String
-  ) {
-    updateProfile(
-      profile: {
-        userId: $userId
-        first_name: $first_name
-        last_name: $last_name
-      }
-    ) {
+  mutation UpdateProfile($profile: UpdateProfileInput!) {
+    updateProfile(profile: $profile) {
       id
       first_name
       last_name
