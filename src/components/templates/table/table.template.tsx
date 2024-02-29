@@ -11,13 +11,12 @@ import { TableBodyOrganism } from "../../organisms/tableBody/tableBody.organism"
 import { SearchTable } from "../../atoms/searchTable/searchTable.atom";
 import { Button, Popover } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useUserDialog } from "../../organisms/forms/forms";
-import { useUser } from "../../../hooks/use-users";
+import { useUserDialog } from "../../organisms/forms/formUser";
 
 type Order = "asc" | "desc";
 
 export function TableUI(props: TableProps) {
-  const { loading, headCells, rows, search, setSearch } = props;
+  const { loading, headCells, rows, search, setSearch, userId } = props;
 
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState(1);
@@ -36,20 +35,19 @@ export function TableUI(props: TableProps) {
   const open = Boolean(selected);
 
   const id = open ? "simple-popover" : undefined;
-  const userId: string = JSON.parse(localStorage.getItem("user") ?? "null").id;
+
   const is_verified = +userId === selected;
 
-  const { user } = useUser(userId);
   if (loading) {
     return <>Загрузка</>;
   }
 
   const handleUpdate = () => {
-    openUserDialog({ user });
+    openUserDialog({ userId });
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", mt: "20px" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <SearchTable setSearch={setSearch} search={search} />
 

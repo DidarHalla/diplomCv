@@ -41,9 +41,7 @@ export const Login: React.FC = () => {
 
     if (data) {
       const { user, access_token } = data.login;
-
-      authReactive.setAuth(access_token,user)
-
+      authReactive.setAuth(access_token, user);
       navigation(routes.root);
     }
   };
@@ -105,7 +103,7 @@ export const Login: React.FC = () => {
           sx={{ mt: 2 }}
           onClick={() => navigation(routes.auth.signup)}
         >
-          {"I don't have an account"}
+          I don't have an account
         </Button>
       </Box>
     </>

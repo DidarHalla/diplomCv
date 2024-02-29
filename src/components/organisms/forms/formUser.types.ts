@@ -1,5 +1,4 @@
-import { User } from "cv-graphql";
-import { DialogProps } from "../../../../helpers/form/form.types.helper";
+import { DialogProps } from "../../../helpers/form/form.types.helper";
 
 export type UserFormValues = {
   auth: {
@@ -17,5 +16,5 @@ export type UserFormValues = {
 export type UserProps = DialogProps & {
   text?: string;
   textBtn?: string;
-  user?: User;
+  userId?: string;
 };

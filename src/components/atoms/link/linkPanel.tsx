@@ -9,15 +9,25 @@ export const LinkPanel = (props: LinkPanelProps) => {
         position: "relative",
         textTransform: "capitalize",
         textDecoration: "none",
+        // указать цвет иконки и текста, и удалить проп
       }}
       to={props.to}
       color={props.color}
     >
-      {props.icon && <Icon sx={{ position: "absolute", mr: 4 }} />}
+      {props.icon && (
+        <Icon
+          component={props.icon}
+          sx={{
+            position: "absolute",
+            mr: 4,
+            zIndex: "5000",
+            color: `${props.color}`,
+          }}
+        />
+      )}
       <Typography
         sx={{
-          ml: props.icon ? 4 : 0,
-          textDecoration: "none",
+          ml: props.icon ? 12 : 0,
         }}
       >
         {props.children}

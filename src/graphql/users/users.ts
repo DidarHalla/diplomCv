@@ -39,3 +39,19 @@ export const USER_FULL_NAME = gql`
     }
   }
 `;
+
+export const USERS = gql`
+  query Users {
+    users {
+      id
+      email
+      department_name
+      position_name
+      profile {
+        avatar
+        first_name
+        last_name
+      }
+    }
+  }
+`;

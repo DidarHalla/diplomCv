@@ -1,77 +1,52 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { User } from "cv-graphql";
-
 
 import { TableUI } from "../../templates/table/table.template";
 import { Data, HeadCell } from "./users.types";
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
 import { useState } from "react";
-
-
-
-
-const USERS = gql`
-  query Users {
-    users {
-      id
-      email
-      department_name
-      position_name
-      profile{
-        avatar  
-        first_name
-        last_name
-      }
-    }
-  }
-`;
-
-
-
-
-
+import { USERS } from "../../../graphql/users/users";
 
 export function Users() {
-
-  const { loading, data } = useQuery<{ users: [User] }>(USERS)
+  const { loading, data } = useQuery<{ users: [User] }>(USERS);
 
   const headCells: readonly HeadCell[] = [
     {
-      id: '0',
+      id: "0",
       numeric: true,
       disablePadding: false,
-      label: '',
+      label: "",
     },
     {
-      id: '1',
+      id: "1",
       numeric: true,
       disablePadding: false,
-      label: 'First Name',
+      label: "First Name",
     },
     {
-      id: '2',
+      id: "2",
       numeric: true,
       disablePadding: false,
-      label: 'Last Name',
+      label: "Last Name",
     },
     {
-      id: '3',
+      id: "3",
       numeric: true,
       disablePadding: false,
-      label: 'Email',
+      label: "Email",
     },
     {
-      id: '4',
+      id: "4",
       numeric: true,
       disablePadding: false,
-      label: 'Department',
+      label: "Department",
     },
     {
-      id: '5',
+      id: "5",
       numeric: true,
       disablePadding: false,
-      label: 'Position',
+      label: "Position",
     },
   ];
   function createData(
@@ -82,38 +57,41 @@ export function Users() {
     email: string,
     department_name: string,
     position_name: string
-
   ): Data {
     return {
-      id: id, data: [
+      id: id,
+      data: [
         avatar,
         first_name,
         last_name,
         email,
         department_name,
-        position_name
-      ]
+        position_name,
+      ],
     };
   }
 
+  const rows =
+    data?.users?.map((user) => {
+      return createData(
+        user.id,
+        <Stack direction="row" spacing={2}>
+          <Avatar src={user.profile.avatar ?? ""}></Avatar>
+        </Stack>,
+        user.profile.first_name ?? "",
+        user.profile.last_name ?? "",
+        user.email,
+        user.department_name ?? "",
+        user.position_name ?? ""
+      );
+    }) ?? [];
 
-  const rows = data?.users?.map(user => {
-    return createData(
-      user.id,
-      <Stack direction="row" spacing={2}>
-        <Avatar src={user.profile.avatar ?? ""}></Avatar>
-      </Stack>,
-      user.profile.first_name ?? "",
-      user.profile.last_name ?? "",
-      user.email, 
-      user.department_name ?? "",
-      user.position_name ?? "")
-  }) ?? []
+  const [search, setSearch] = useState("");
+  const userId: string = JSON.parse(localStorage.getItem("user") ?? "null").id;
 
-  const [search,setSearch]=useState("")
-  console.log(2);
-  
-  if (loading) { return <>загрузка</> }
+  if (loading) {
+    return <>загрузка</>;
+  }
 
   return (
     <>
@@ -123,8 +101,9 @@ export function Users() {
         rows={rows}
         data={data ?? { users: [] }}
         loading={loading}
-        headCells={headCells} />
+        headCells={headCells}
+        userId={userId}
+      />
     </>
-  )
-
+  );
 }

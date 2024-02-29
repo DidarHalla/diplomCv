@@ -10,11 +10,6 @@ import { SIGN_NUP } from "../../../apollo client/mutation";
 import { authReactive } from "../../../graphql/authReactive/authReactive";
 
 export const Signup: React.FC = () => {
-  const [vision, setVision] = useState(true);
-  const passwordVision = useCallback(() => {
-    setVision((prev) => !prev);
-  }, []);
-
   const {
     formState: { errors }, // state errors forms
     register,
@@ -25,6 +20,10 @@ export const Signup: React.FC = () => {
       password: "",
     },
   });
+  const [vision, setVision] = useState(true);
+  const passwordVision = useCallback(() => {
+    setVision((prev) => !prev);
+  }, []);
 
   const navigation = useNavigate();
   const [signup] = useMutation(SIGN_NUP);
@@ -37,7 +36,7 @@ export const Signup: React.FC = () => {
     });
     if (data) {
       const { user, access_token } = data.signup;
-      authReactive.setAuth(access_token,user)
+      authReactive.setAuth(access_token, user);
       navigation(routes.root);
     }
   };
@@ -97,7 +96,7 @@ export const Signup: React.FC = () => {
           sx={{ mt: 2 }}
           onClick={() => navigation(routes.auth.login)}
         >
-          {"I have an account"}
+          I have an account
         </Button>
       </Box>
     </>

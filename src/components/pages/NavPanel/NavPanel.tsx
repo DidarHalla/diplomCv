@@ -5,8 +5,10 @@ import { LinkPanel } from "../../atoms/link/linkPanel";
 import { Outlet, useLocation } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { NavPanelContext } from "./NavPanel.Context";
-import { HomeOutlined } from "@mui/icons-material";
+import { Home, NavigateNext } from "@mui/icons-material";
 import { NavPanelConfig } from "./NavPanel. types";
+// import { StyledBreadCrumbs } from "./NavPanel.styles";
+import * as Styled from "./NavPanel.styles";
 
 const useNavPanel = (config: NavPanelConfig, path) => {
   const context = useContext(NavPanelContext);
@@ -38,20 +40,37 @@ export const NavPanel: React.FC = () => {
 
   return (
     <>
-      <Breadcrumbs separator=">">
-        <LinkPanel to={routes.root} icon={HomeOutlined} color="inherit">
+      <Styled.BreadCrumbs separator={<NavigateNext />}>
+        <LinkPanel to={routes.root} icon={Home} color="inherit">
           Home
         </LinkPanel>
         {links.map(({ name, to }) => {
           const option = config[to];
 
           return (
-            <LinkPanel to={option?.to || to} key={name}>
+            <LinkPanel to={option?.to || to} color={option?.color} key={name}>
               {option?.text}
             </LinkPanel>
           );
         })}
-      </Breadcrumbs>
+      </Styled.BreadCrumbs>
+      {/* <Breadcrumbs
+        sx={{ position: "fixed", top: "90px", width: "100%", height: "30px" }}
+        separator=">"
+      >
+        <LinkPanel to={routes.root} icon={Home} color="inherit">
+          Home
+        </LinkPanel>
+        {links.map(({ name, to }) => {
+          const option = config[to];
+
+          return (
+            <LinkPanel to={option?.to || to} color={option?.color} key={name}>
+              {option?.text}
+            </LinkPanel>
+          );
+        })}
+      </Breadcrumbs> */}
       <Outlet />
     </>
   );

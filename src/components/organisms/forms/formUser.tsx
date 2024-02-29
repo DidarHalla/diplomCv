@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { UserFormValues, UserProps } from "./forms.types";
-import { useUpdateUser } from "../../../hooks/use-users";
+import { UserFormValues, UserProps } from "./formUser.types";
+import { useUpdateUser, useUser } from "../../../hooks/use-users";
 import { useUpdateProfile } from "../../../hooks/use-profile";
 import {
   Button,
@@ -12,18 +12,21 @@ import {
 import { DepartamentSelect } from "../../molecules/department-select/department-select";
 import { PositionSelect } from "../../molecules/position-select/position-select";
 import { dialogHelpers } from "../../../helpers/form/form.helper";
+import { useEffect } from "react";
 
 export const User = ({
   text = "Update user",
   textBtn = "Update",
-  user,
+  userId,
   closeDialog,
 }: UserProps) => {
+  const { user, loading } = useUser(userId);
+
   const properties = useForm<UserFormValues>({
     defaultValues: {
       auth: {
         email: user?.email || "",
-        password: user ? "**********" : "",
+        password: user ? "*****" : "",
       },
       profile: {
         first_name: user?.profile.first_name || "",
@@ -38,7 +41,21 @@ export const User = ({
     formState: { errors, isDirty },
     register,
     handleSubmit,
+    setValue,
   } = properties;
+
+  useEffect(() => {
+    setValue("auth", {
+      email: user?.email || "",
+      password: user ? "*****" : "",
+    });
+    setValue("profile", {
+      first_name: user?.profile.first_name || "",
+      last_name: user?.profile.last_name || "",
+    });
+    setValue("departmentId", user?.department?.id || "");
+    setValue("positionId", user?.position?.id || "");
+  }, [loading]);
 
   const [updateUser, { loading: load }] = useUpdateUser();
   const [updateProfile] = useUpdateProfile();
@@ -111,8 +128,8 @@ export const User = ({
           <PositionSelect name="positionId" />
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" color="secondary" onClick={closeDialog}>
-            {"Cancel"}
+          <Button variant="outlined" color="primary" onClick={closeDialog}>
+            Cancel
           </Button>
           <Button
             variant="contained"
