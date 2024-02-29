@@ -10,3 +10,4 @@ export const useUpdateProfile = () => {
     { refetchQueries: [USERS] }
   );
 };
+

@@ -17,6 +17,7 @@ export const TableBodyOrganism = (props: TableBodyProps) => {
     orderBy,
     search,
     setAnchorPos,
+    data,
   } = props;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -32,9 +33,8 @@ export const TableBodyOrganism = (props: TableBodyProps) => {
         data: row.slice(0, row.length - 1),
       };
     });
-
     return filtered;
-  }, [order, orderBy, page, rowsPerPage, search]);
+  }, [order, orderBy, page, rowsPerPage, search, data]);
 
   const sortedRows = useMemo(
     () =>
@@ -42,7 +42,7 @@ export const TableBodyOrganism = (props: TableBodyProps) => {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage, search]
+    [order, orderBy, page, rowsPerPage, search, data]
   );
 
   return (
@@ -50,6 +50,7 @@ export const TableBodyOrganism = (props: TableBodyProps) => {
       {sortedRows.map((row) => {
         return (
           <TableRowsMolecule
+            key={row.id}
             setAnchorPos={setAnchorPos}
             setSelected={setSelected}
             row={row}

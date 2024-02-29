@@ -9,14 +9,13 @@ import { TableHeadUI } from "../../organisms/tableHead/tableHead.organism";
 import { TablePaginations } from "../../molecules/TablePaginations/tablePaginations.molecule";
 import { TableBodyOrganism } from "../../organisms/tableBody/tableBody.organism";
 import { SearchTable } from "../../atoms/searchTable/searchTable.atom";
-import { Button, Popover } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useUserDialog } from "../../organisms/forms/formUser";
+
+import { UsersTable } from "../../dialogs/usersTable.dialog";
 
 type Order = "asc" | "desc";
 
 export function TableUI(props: TableProps) {
-  const { loading, headCells, rows, search, setSearch, userId } = props;
+  const { loading, headCells, rows, search, setSearch, userId, data } = props;
 
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState(1);
@@ -26,25 +25,9 @@ export function TableUI(props: TableProps) {
 
   const [anchorPos, setAnchorPos] = useState({ top: 0, left: 0 });
 
-  const navigate = useNavigate();
-
-  const handleClose = () => {
-    setSelected(null);
-  };
-  const [openUserDialog] = useUserDialog();
-  const open = Boolean(selected);
-
-  const id = open ? "simple-popover" : undefined;
-
-  const is_verified = +userId === selected;
-
   if (loading) {
     return <>Загрузка</>;
   }
-
-  const handleUpdate = () => {
-    openUserDialog({ userId });
-  };
 
   return (
     <Box sx={{ width: "100%", mt: "20px" }}>
@@ -52,46 +35,11 @@ export function TableUI(props: TableProps) {
         <SearchTable setSearch={setSearch} search={search} />
 
         <TableContainer>
-          <Popover
-            id={id}
-            open={open}
-            onClose={handleClose}
-            anchorReference="anchorPosition"
-            anchorPosition={anchorPos}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-          >
-            <Button
-              variant="contained"
-              onClick={() => {
-                navigate("" + selected);
-              }}
-              sx={{ display: "block", width: 100 + "%" }}
-            >
-              Профиль
-            </Button>
-            <Button
-              disabled={!is_verified}
-              variant="contained"
-              sx={{ display: "block", width: 100 + "%" }}
-              onClick={handleUpdate}
-            >
-              Обновить пользователя
-            </Button>{" "}
-            <Button
-              disabled={true}
-              variant="contained"
-              sx={{ display: "block", width: 100 + "%" }}
-            >
-              Удалить пользователя
-            </Button>
-          </Popover>
+          <UsersTable
+            anchorPos={anchorPos}
+            selected={selected}
+            setSelected={setSelected}
+          />
 
           <Table
             stickyHeader
@@ -117,6 +65,7 @@ export function TableUI(props: TableProps) {
               orderBy={orderBy}
               search={search}
               setAnchorPos={setAnchorPos}
+              data={data}
             />
           </Table>
         </TableContainer>

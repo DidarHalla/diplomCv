@@ -67,9 +67,9 @@ export function MenuAppBar() {
           </ListItem>
         </NavLink>
         {navItems.slice(1).map((item, i) => (
-          <NavLink to={item.to} style={{ textDecoration: "none" }} >
+          <NavLink key={i}  to={item.to} style={{ textDecoration: "none" }} >
             {({ isActive }) => {
-              return (<ListItem key={i} disablePadding>
+              return (<ListItem  disablePadding>
 
                 <ListItemButton sx={{ textAlign: 'center', backgroundColor: isActive ? "#1976d2" : "", color: isActive ? 'white' : "", ":hover": { color: "#0000EE" } }} >
                   <ListItemText primary={item.name} />
@@ -134,7 +134,7 @@ export function MenuAppBar() {
                 handleClose()
               }}>Профиль</MenuItem>
 
-              <MenuItem value={"settings"} onClick={(ev) => {
+              <MenuItem value={"settings"} onClick={() => {
                 navigation(routes.settings)
                 handleClose()
               }}>Настройки</MenuItem>
