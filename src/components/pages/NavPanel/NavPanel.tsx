@@ -1,5 +1,3 @@
-import { Breadcrumbs } from "@mui/material";
-
 import { routes } from "../../../constants/routes";
 import { LinkPanel } from "../../atoms/link/linkPanel";
 import { Outlet, useLocation } from "react-router-dom";
@@ -54,23 +52,7 @@ export const NavPanel: React.FC = () => {
           );
         })}
       </Styled.BreadCrumbs>
-      {/* <Breadcrumbs
-        sx={{ position: "fixed", top: "90px", width: "100%", height: "30px" }}
-        separator=">"
-      >
-        <LinkPanel to={routes.root} icon={Home} color="inherit">
-          Home
-        </LinkPanel>
-        {links.map(({ name, to }) => {
-          const option = config[to];
 
-          return (
-            <LinkPanel to={option?.to || to} color={option?.color} key={name}>
-              {option?.text}
-            </LinkPanel>
-          );
-        })}
-      </Breadcrumbs> */}
       <Outlet />
     </>
   );
