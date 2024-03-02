@@ -19,4 +19,5 @@ export type UserProfileFormValues = {
 
 export type EmployeeProfileFormProps = {
   user: User | undefined;
+  owner: boolean;
 };
