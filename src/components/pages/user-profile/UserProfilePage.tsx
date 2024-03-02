@@ -2,11 +2,7 @@ import "./UserProfilePage.css";
 import CloseIcon from "@mui/icons-material/Close";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import { InputLabel } from "@mui/material";
-import { DeleteAvatarInput, User } from "cv-graphql";
+import { DeleteAvatarInput } from "cv-graphql";
 import { USER_AVATAR_DELETED } from "../../../graphql/profile";
 import { useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
@@ -14,39 +10,32 @@ import { FileUploadOutlined } from "@mui/icons-material";
 import { fileToBase64 } from "./file-to-base64.helper";
 import {
   useAvatarUploaded,
-  useProfileUpdate,
+  useUpdateProfile,
 } from "../../../hooks/use-profile";
 import * as Styled from "../../../graphql/profile/profile-form.styles";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useUpdateUser } from "../../../hooks/use-users";
 import { FormProvider, useForm } from "react-hook-form";
-
-type UserProfileFormValues = {
-  profile: {
-    first_name: string;
-    last_name: string;
-  };
-  department: string;
-  position: string;
-};
-
-type EmployeeProfileFormProps = {
-  user: User;
-};
+import { DepartamentSelect } from "../../molecules/department-select/department-select";
+import { PositionSelect } from "../../molecules/position-select/position-select";
+import {
+  EmployeeProfileFormProps,
+  UserProfileFormValues,
+} from "../../../graphql/profile/profile.types";
+import { USER } from "../../../graphql/query";
 
 export const UserProfilePage = (props: EmployeeProfileFormProps) => {
   const { userId = " " } = useParams();
-
   const { user } = props;
   const [uploadAvatar, { loading: isLoading }] = useAvatarUploaded();
   const userAdmin: boolean = true;
-  const [updateProfile] = useProfileUpdate();
+  const [updateProfile] = useUpdateProfile();
   const [updateUser, { loading }] = useUpdateUser();
 
   const [useAvatarDelete] = useMutation<null, { avatar: DeleteAvatarInput }>(
-    USER_AVATAR_DELETED
+    USER_AVATAR_DELETED, {refetchQueries: [USER]}
   );
   const useAvatarDeleted = () => {
     useAvatarDelete({ variables: { avatar: { userId: userId ?? "" } } });
@@ -71,12 +60,19 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
         first_name: user?.profile.first_name || "",
         last_name: user?.profile.last_name || "",
       },
-      department: user?.department_name || "",
-      position: user?.position_name || "",
+      department: user?.department?.id || "",
+      position: user?.position?.id || "",
     },
   });
-  const { formState, register, handleSubmit, reset } = methods;
-
+  const { formState, register, handleSubmit, reset, setValue } = methods;
+  useEffect(() => {
+    setValue("profile", {
+      first_name: user?.profile.first_name || "",
+      last_name: user?.profile.last_name || "",
+    });
+    setValue("department", user?.department?.id || "");
+    setValue("position", user?.position?.id || "");
+  }, [!!user]);
   const onSubmit = ({
     profile,
     position,
@@ -86,7 +82,7 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
       updateProfile({
         variables: {
           profile: {
-            userId: userId,
+            userId: user?.id ?? "",
             first_name: profile.first_name,
             last_name: profile.last_name,
           },
@@ -95,14 +91,13 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
       updateUser({
         variables: {
           user: {
-            userId: userId,
+            userId: user?.id ?? "",
             departmentId: department,
             positionId: position,
           },
         },
       }),
     ]).then(() => reset({ profile, position, department }));
-    console.log(user);
 
     return;
   };
@@ -174,7 +169,7 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
           <div>
             <span className="member-since">
               A member since
-              {new Date(+user?.profile.created_at).toDateString()}
+              {new Date(+(user?.profile.created_at ?? "")).toDateString()}
             </span>
           </div>
         </div>
@@ -191,75 +186,17 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
                   <TextField
                     required
                     {...register("profile.first_name")}
-                    label="First Name"
+                    label={user ? "" : "First Name"}
                     className="first-name"
                   />
-                  <FormControl>
-                    <InputLabel htmlFor="department">Department</InputLabel>
-                    <Select
-                      name="departmentId"
-                      labelId="department"
-                      id="department"
-                      label="Department"
-                    >
-                      <MenuItem>No department</MenuItem>
-                      <MenuItem value="React">React</MenuItem>
-                      <MenuItem value="Angular">Angular</MenuItem>
-                      <MenuItem value="Node">Node</MenuItem>
-                      <MenuItem value="Python">Python</MenuItem>
-                      <MenuItem value="DevOps">DevOps</MenuItem>
-                      <MenuItem value="Global">Global</MenuItem>
-                      <MenuItem value="Quality Assurance">
-                        Quality Assurance
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
+                  <DepartamentSelect name="department" />
                   <TextField
                     required
                     {...register("profile.last_name")}
-                    label="Last Name"
+                    label={user ? "" : "Last Name"}
                     className="last-name"
                   />
-                  <FormControl>
-                    <InputLabel id="demo-select-small-label">
-                      Position
-                    </InputLabel>
-                    <Select
-                      labelId="demo-select-small-label"
-                      id="demo-select-small"
-                      name="positionId"
-                      label="Position"
-                    >
-                      <MenuItem>No position</MenuItem>
-                      <MenuItem value="Software Engineer">
-                        Software Engineer
-                      </MenuItem>
-                      <MenuItem value="Systems Analyst">
-                        Systems Analyst
-                      </MenuItem>
-                      <MenuItem value="Network Engineer">
-                        Network Engineer
-                      </MenuItem>
-                      <MenuItem value="userbase Administrator">
-                        userBase Administrator
-                      </MenuItem>
-                      <MenuItem value="UX Designer">UX Designer</MenuItem>
-                      <MenuItem value="Support Specialist">
-                        Support Specialist
-                      </MenuItem>
-                      <MenuItem value="user Analyst">user Analyst</MenuItem>
-                      <MenuItem value="user Architect">user Architect</MenuItem>
-                      <MenuItem value="DevOps Engineer">
-                        DevOps Engineer
-                      </MenuItem>
-                      <MenuItem value="QA Engineer">QA Engineer</MenuItem>
-                      <MenuItem value="Cloud Engineer">Cloud Engineer</MenuItem>
-                      <MenuItem value="Project Manager">
-                        Project Manager
-                      </MenuItem>
-                      <MenuItem value="AQA Engineer">AQA Engineer</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <PositionSelect name="position" />
                   <Button
                     type="submit"
                     disabled={!formState.isDirty || loading}

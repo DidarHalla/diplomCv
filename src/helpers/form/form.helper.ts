@@ -2,7 +2,7 @@ import { FC, useCallback, useRef } from "react";
 import { DialogOptions, IDialog } from "./form.types.helper";
 import { makeVar } from "@apollo/client";
 
-const dialogs = makeVar<IDialog[]>([]);
+export const dialogs = makeVar<IDialog[]>([]);
 let id = 0;
 
 const addDialog = (Component: FC, options: DialogOptions) => {

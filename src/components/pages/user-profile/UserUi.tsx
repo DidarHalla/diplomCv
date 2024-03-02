@@ -6,11 +6,7 @@ import { useUser } from "../../../hooks/use-users";
 
 export const UserUi = () => {
   const { userId } = useParams();
-  const { user, loading } = useUser(userId)
-
-  if (loading || !user) {
-    return <div>Загрузка...</div>;
-  }
+  const { user } = useUser(userId)
   
   return (
     <>

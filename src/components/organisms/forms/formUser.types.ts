@@ -1,5 +1,4 @@
-import { DialogProps } from "@mui/material";
-import { User } from "cv-graphql";
+import { DialogProps } from "../../../helpers/form/form.types.helper";
 
 export type UserFormValues = {
   auth: {
@@ -12,11 +11,10 @@ export type UserFormValues = {
   };
   departmentId: string;
   positionId: string;
-  // role: UserRole
 };
 
 export type UserProps = DialogProps & {
   text?: string;
   textBtn?: string;
-  user?: User;
+  userId?: string;
 };

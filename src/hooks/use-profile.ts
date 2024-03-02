@@ -1,16 +1,11 @@
 import { useMutation } from "@apollo/client";
-import { USER, USER_FULL_NAME } from "../graphql/users/users";
+import { USER_FULL_NAME } from "../graphql/users/users";
 import { useParams } from "react-router-dom";
 import { UPDATE_PROFILE, UPLOAD_AVATAR } from "../graphql/profile";
-import { Profile, UpdateProfileInput, UploadAvatarInput } from "cv-graphql";
+import { UpdateProfileInput, UploadAvatarInput } from "cv-graphql";
+import { USER } from "../graphql/query";
+import { UpdateProfileResult, UploadAvatarResult } from "../graphql/profile/profile.types";
 
-type UploadAvatarResult = {
-  uploadAvatar: string;
-};
-
-type UpdateProfileResult = {
-  UpdateProfile: Profile;
-}
 
 export const useAvatarUploaded = () => {
   const { userId } = useParams();
@@ -22,8 +17,9 @@ export const useAvatarUploaded = () => {
   );
 };
 
-export const useProfileUpdate = () => {
+export const useUpdateProfile = () => {
   return useMutation<UpdateProfileResult, { profile: UpdateProfileInput }>(UPDATE_PROFILE, {
     refetchQueries: [USER, USER_FULL_NAME]
   })
 };
+

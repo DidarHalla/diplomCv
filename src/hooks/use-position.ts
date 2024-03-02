@@ -3,5 +3,6 @@ import { PositionsResult } from "../graphql/positions/positions.types";
 import { POSITIONS } from "../graphql/positions/positions";
 
 export const usePositions = () => {
-  return useQuery<PositionsResult>(POSITIONS);
+  const position = useQuery<PositionsResult>(POSITIONS);
+  return { position: position.data, ...position };
 };

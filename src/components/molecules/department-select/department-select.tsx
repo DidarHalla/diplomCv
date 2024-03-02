@@ -13,7 +13,13 @@ export const DepartamentSelect = ({
     <Controller
       name={name}
       render={({ field }) => (
-        <TextField {...props} {...field} disabled={loading} label="Departament">
+        <TextField
+          {...props}
+          {...field}
+          select
+          disabled={loading}
+          label="Departament"
+        >
           <MenuItem value="">{"No Departament"}</MenuItem>
           {data?.departments.map(({ id, name }) => (
             <MenuItem key={id} value={id}>

@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { UserFormValues, UserProps } from "./forms.types";
-import { useUpdateUser } from "../../../../hooks/use-users";
-import { useUpdateProfile } from "../../../../hooks/use-profile";
+import { UserFormValues, UserProps } from "./formUser.types";
+import { useUpdateUser, useUser } from "../../../hooks/use-users";
+import { useUpdateProfile } from "../../../hooks/use-profile";
 import {
   Button,
   DialogActions,
@@ -9,21 +9,24 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { DepartamentSelect } from "../../../molecules/department-select/department-select";
-import { PositionSelect } from "../../../molecules/position-select/position-select";
-import { dialogHelpers } from "../../../../helpers/form/form.helper";
+import { DepartamentSelect } from "../../molecules/department-select/department-select";
+import { PositionSelect } from "../../molecules/position-select/position-select";
+import { dialogHelpers } from "../../../helpers/form/form.helper";
+import { useEffect } from "react";
 
-export const Form = ({
+export const User = ({
   text = "Update user",
   textBtn = "Update",
-  user,
+  userId,
   closeDialog,
 }: UserProps) => {
+  const { user, loading } = useUser(userId);
+
   const properties = useForm<UserFormValues>({
     defaultValues: {
       auth: {
         email: user?.email || "",
-        password: user ? "**********" : "",
+        password: user ? "*****" : "",
       },
       profile: {
         first_name: user?.profile.first_name || "",
@@ -38,9 +41,23 @@ export const Form = ({
     formState: { errors, isDirty },
     register,
     handleSubmit,
+    setValue,
   } = properties;
 
-  const [updateUser, { loading: updating }] = useUpdateUser();
+  useEffect(() => {
+    setValue("auth", {
+      email: user?.email || "",
+      password: user ? "*****" : "",
+    });
+    setValue("profile", {
+      first_name: user?.profile.first_name || "",
+      last_name: user?.profile.last_name || "",
+    });
+    setValue("departmentId", user?.department?.id || "");
+    setValue("positionId", user?.position?.id || "");
+  }, [loading]);
+
+  const [updateUser, { loading: load }] = useUpdateUser();
   const [updateProfile] = useUpdateProfile();
 
   const submit = ({ profile, departmentId, positionId }: UserFormValues) => {
@@ -58,8 +75,8 @@ export const Form = ({
             },
           },
         }),
-      ]).then();
-      //   return
+      ]).then(closeDialog);
+      return;
     }
   };
 
@@ -67,7 +84,18 @@ export const Form = ({
     <FormProvider {...properties}>
       <form onSubmit={handleSubmit(submit)}>
         <DialogTitle>{text}</DialogTitle>
-        <DialogContent>
+        <DialogContent
+          sx={{
+            overflowY: "auto",
+            paddingRight: "24px",
+            paddingBottom: "20px",
+            paddingLeft: "24px",
+            display: "grid",
+            gridTemplateColumns: "1fr" + " 1fr",
+            gap: "32px",
+            paddingTop: "16px" + " !important",
+          }}
+        >
           <TextField
             {...register("auth.email", {
               validate: (val: string) => {
@@ -76,7 +104,7 @@ export const Form = ({
                 }
               },
             })}
-            label="Email"
+            label={loading ? "Email" : ""}
             disabled
             error={!!errors.auth?.email}
             helperText={errors.auth?.email?.message}
@@ -89,25 +117,31 @@ export const Form = ({
                 }
               },
             })}
-            label="Password"
+            label={loading ? "Password" : ""}
             disabled
             error={!!errors.auth?.password}
             helperText={errors.auth?.password?.message}
           />
-          <TextField {...register("profile.first_name")} label={"First Name"} />
-          <TextField {...register("profile.last_name")} label={"Last Name"} />
+          <TextField
+            {...register("profile.first_name")}
+            label={loading ? "First Name" : ""}
+          />
+          <TextField
+            {...register("profile.last_name")}
+            label={loading ? "Last Name" : ""}
+          />
           <DepartamentSelect name="departmentId" />
           <PositionSelect name="positionId" />
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" color="secondary" onClick={}>
-            {"Cancel"}
+          <Button variant="outlined" color="primary" onClick={closeDialog}>
+            Cancel
           </Button>
           <Button
             variant="contained"
             color="primary"
             type="submit"
-            disabled={updating || !isDirty}
+            disabled={load || !isDirty}
           >
             {textBtn}
           </Button>
@@ -117,7 +151,7 @@ export const Form = ({
   );
 };
 
-export const useFormDialog = dialogHelpers<UserProps>(
-  (props) => () => <Form {...props} />,
+export const useUserDialog = dialogHelpers<UserProps>(
+  (props) => () => <User {...props} />,
   { maxWidth: "md", fullWidth: true }
 );
