@@ -41,6 +41,11 @@ export const USER = gql`
         id
         name
       }
+      cvs{
+        id
+        name
+        description
+      }
     }
   }
 `;

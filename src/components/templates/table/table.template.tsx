@@ -9,14 +9,14 @@ import { TableHeadUI } from "../../organisms/tableHead/tableHead.organism";
 import { TablePaginations } from "../../molecules/TablePaginations/tablePaginations.molecule";
 import { TableBodyOrganism } from "../../organisms/tableBody/tableBody.organism";
 import { SearchTable } from "../../atoms/searchTable/searchTable.atom";
+import { UsersTableDdialog } from "../../dialogs/usersTable.dialog";
 
-import { UsersTableBtn } from "../../dialogs/usersTable.dialog";
 
 type Order = "asc" | "desc";
 
 export function TableUI(props: TableProps) {
-  const { loading, headCells, rows, search, setSearch, userId, data } = props;
-
+  const { loading, headCells, rows, search, setSearch, data,TableDdialogButton } = props;
+  
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState(1);
   const [selected, setSelected] = useState<number | null>(null);
@@ -35,11 +35,11 @@ export function TableUI(props: TableProps) {
         <SearchTable setSearch={setSearch} search={search} />
 
         <TableContainer>
-          <UsersTableBtn
+          <UsersTableDdialog
             anchorPos={anchorPos}
             selected={selected}
             setSelected={setSelected}
-            userId={userId}
+            TableDdialogButton={TableDdialogButton}
           />
 
           <Table

@@ -1,27 +1,28 @@
 import { useState } from "react";
-import { useCVs } from "../../../hooks/use-cvs"
 import { TableUI } from "../../templates/table/table.template"
-import { headCellsCvs } from "../../../constants/headCells"; 
+import { headCellsUserCvs } from "../../../constants/headCells"; 
 import { createHederTable } from "../../helpers/createHederTable.helper";
 import { CvsTableDdialogButton } from "../../atoms/cvsTableDdialog-button/cvsTableDdialog-button";
+import { useUser } from "../../../hooks/use-users";
+import { useParams } from "react-router-dom";
 
-export const Cvs=()=>{
+export const UserCvs=()=>{
+    const {userId}= useParams()
     const [search, setSearch] = useState("");
-    const { cvs, loading } = useCVs();
-    const rows =cvs?.cvs?.map((cv) => {
+    const { user, loading } = useUser(userId);
+    const cvs=user?.cvs
+    const rows =cvs?.map((cv) => {
       return createHederTable(
         cv.id,
         cv.name,
-        cv.description.slice(0,100),
-        cv.user?.email ?? ""
-      )
+        cv.description.slice(0,100))
     }) ?? [];
 
     return (
         <TableUI 
         TableDdialogButton={CvsTableDdialogButton}
-        data={cvs?.cvs ??  [] }
-        headCells={headCellsCvs}
+        data={cvs ??  [] }
+        headCells={headCellsUserCvs}
         loading={loading}
         rows={rows}
         search={search}

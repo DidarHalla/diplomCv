@@ -17,10 +17,10 @@ import { useEffect } from "react";
 export const User = ({
   text = "Update user",
   textBtn = "Update",
-  userId,
+  ownerId,
   closeDialog,
 }: UserProps) => {
-  const { user, loading } = useUser(userId);
+  const { user, loading } = useUser(ownerId);
 
   const properties = useForm<UserFormValues>({
     defaultValues: {

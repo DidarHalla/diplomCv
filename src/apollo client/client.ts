@@ -8,7 +8,6 @@ import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import { addErrorMessage } from "./authHooks/auth.hooks";
 import { authReactive } from "../graphql/authReactive/authReactive";
-import {} from "cv-graphql";
 
 const httpLink = createHttpLink({
   uri: "https://cv-project-js.inno.ws/api/graphql",

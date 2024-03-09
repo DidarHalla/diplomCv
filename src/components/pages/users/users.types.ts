@@ -1,4 +1,4 @@
-export type Data ={id:string ,data:(string|JSX.Element)[]}
+export type Data ={id:string ,data:(string|JSX.Element|number)[]}
 export interface HeadCell {
   disablePadding: boolean;
   id: string;
