@@ -9,18 +9,21 @@ import { TableHeadUI } from "../../organisms/tableHead/tableHead.organism";
 import { TablePaginations } from "../../molecules/TablePaginations/tablePaginations.molecule";
 import { TableBodyOrganism } from "../../organisms/tableBody/tableBody.organism";
 import { SearchTable } from "../../atoms/searchTable/searchTable.atom";
-import { UsersTableDdialog } from "../../dialogs/usersTable.dialog";
-
-<<<<<<< HEAD
-import { UsersTableBtn } from "../../dialogs/user/usersTable.dialog";
-=======
->>>>>>> bb93ea51f0d00f1ae36b2c73175354ffd0041ffb
+import { UsersTableDdialog } from "../../dialogs/user/usersTable.dialog";
 
 type Order = "asc" | "desc";
 
 export function TableUI(props: TableProps) {
-  const { loading, headCells, rows, search, setSearch, data,TableDdialogButton } = props;
-  
+  const {
+    loading,
+    headCells,
+    rows,
+    search,
+    setSearch,
+    data,
+    TableDdialogButton,
+  } = props;
+
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState(1);
   const [selected, setSelected] = useState<number | null>(null);
