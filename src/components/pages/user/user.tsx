@@ -1,8 +1,12 @@
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { Box, Tab, Tabs } from "@mui/material";
 
+interface MenuDescriptionProps{
+  tabsNavigates:{value:string,label:string}[]
+}
 
-export const User = () => {
+export const MenuDescription = (props:MenuDescriptionProps) => {
+  const {tabsNavigates}= props
   const navigation = useNavigate()
   const location = useLocation().pathname.split("/");
 
@@ -16,11 +20,8 @@ export const User = () => {
     <Box sx={{ width: '100%' }}>
 
       <Tabs value={location[3]??false} onChange={handleClick}  >
-
-        <Tab value={"profile"} label={"Профиль"} />
-        <Tab value={"skills"} label={"Навыки"} />
-        <Tab value={"languages"} label={"Языки"} />
-        <Tab value={"cvs"} label={"Резюме"} />
+        {tabsNavigates.map(({value,label})=><Tab value={value} label={label} />)}
+       
 
       </Tabs>
 

@@ -3,5 +3,6 @@ import { DepartmentsResult } from "../graphql/departaments/departaments.type";
 import { DEPARTMENTS } from "../graphql/departaments/departaments";
 
 export const useDepartaments = () => {
-  return useQuery<DepartmentsResult>(DEPARTMENTS);
+  const data= useQuery<DepartmentsResult>(DEPARTMENTS);
+  return { departments: data.data, ...data };
 };

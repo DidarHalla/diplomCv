@@ -5,10 +5,18 @@ import { Login } from "../pages/login/login";
 import { Signup } from "../pages/signup/signup";
 import { Users } from "../pages/users/users";
 import { UserUi } from "../pages/user-profile/UserUi";
-import { User } from "../pages/user/user";
+import { MenuDescription } from "../pages/user/user";
 import { MenuAppBar } from "../pages/menuAppBar/menuAppBar";
 import { CheckRegistr } from "../pages/checkRegistr/checkRegistr";
 import { NavPanel } from "../pages/NavPanel/NavPanel";
+import { Cvs } from "../pages/cvs/cvs";
+import { Projects } from "../pages/projects/projects";
+import { Departments } from "../pages/departments/departments";
+import { Positions } from "../pages/positions/positions";
+import { Skills } from "../pages/skills/skills";
+import { Languages } from "../pages/languages/languages";
+import { UserCvs } from "../pages/user-cvs/user-cvs";
+import { CvProjects } from "../pages/cv-projects/cv-projects";
 import { UserSkills } from "../pages/user-skills/user-skills";
 
 export const Router: React.FC = () => {
@@ -25,21 +33,63 @@ export const Router: React.FC = () => {
               <Route element={<NavPanel />}>
                 <Route path={routes.settings} element={<h2>Настройки</h2>} />
                 <Route path={routes.users.root} element={<Users />} />
-                <Route path={routes.users.user} element={<User />}>
+                <Route
+                  path={routes.users.user}
+                  element={
+                    <MenuDescription
+                      tabsNavigates={[
+                        { value: "profile", label: "Профиль" },
+                        { value: "skills", label: "Навыки" },
+                        { value: "languages", label: "Языки" },
+                        { value: "cvs", label: "Резюме" },
+                      ]}
+                    />
+                  }
+                >
                   <Route path={routes.users.profile} element={<UserUi />} />
                   <Route path={routes.users.skills} element={<UserSkills />} />
                   <Route
                     path={routes.users.languages}
                     element={<h1>Языки</h1>}
                   />
-                  <Route path={routes.users.cvs} element={<h1>Резюме</h1>} />
+                  <Route path={routes.users.cvs} element={<UserCvs />} />
                 </Route>
-                <Route path={routes.projects.root} element={<h2>Проекты</h2>} />
-                <Route path={routes.cvs.root} element={<h2>Резюме</h2>} />
-                <Route path={routes.departments} element={<h2>Отделы</h2>} />
-                <Route path={routes.positions} element={<h2>Должности</h2>} />
-                <Route path={routes.skills} element={<h2>Навыки</h2>} />
-                <Route path={routes.languages} element={<h2>Языки</h2>} />
+                <Route path={routes.projects.root} element={<Projects />} />
+                <Route
+                  path={routes.projects.project}
+                  element={<h1>Подробнее</h1>}
+                />
+
+                <Route path={routes.cvs.root} element={<Cvs />} />
+                <Route
+                  path={routes.cvs.cv}
+                  element={
+                    <MenuDescription
+                      tabsNavigates={[
+                        { value: "details", label: "Подробности" },
+                        { value: "skills", label: "Навыки" },
+                        { value: "projects", label: "Проекты" },
+                        { value: "preview", label: "Просмотр" },
+                      ]}
+                    />
+                  }
+                >
+                  <Route
+                    path={routes.cvs.details}
+                    element={<h1>Подробности</h1>}
+                  />
+                  <Route path={routes.cvs.skills} element={<h1>Навыки</h1>} />
+                  <Route path={routes.cvs.projects} element={<CvProjects />} />
+                  <Route
+                    path={routes.cvs.preview}
+                    element={<h1>Просмотр</h1>}
+                  />
+                </Route>
+
+                <Route path={routes.departments} element={<Departments />} />
+                <Route path={routes.positions} element={<Positions />} />
+                <Route path={routes.skills} element={<Skills />} />
+                <Route path={routes.languages} element={<Languages />} />
               </Route>
               <Route path="*" element={<Navigate to={routes.users.root} />} />
             </Route>

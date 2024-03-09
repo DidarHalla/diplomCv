@@ -1,8 +1,4 @@
-import { Button, Popover } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-
-import { useUserDialog } from "../../organisms/forms/formUser";
-
+import { Popover } from "@mui/material";
 type UsersTableProps = {
   setSelected: React.Dispatch<React.SetStateAction<number | null>>;
 
@@ -11,23 +7,16 @@ type UsersTableProps = {
     top: number;
     left: number;
   };
-  userId?: string | undefined;
+  TableDdialogButton: (props: { selected: number | null }) => JSX.Element;
 };
 
-export const UsersTableBtn = (props: UsersTableProps) => {
-  const { selected, setSelected, anchorPos, userId } = props;
-  const [openUserDialog] = useUserDialog();
-
-  const navigate = useNavigate();
+export const UsersTableDdialog = (props: UsersTableProps) => {
+  const { selected, setSelected, anchorPos, TableDdialogButton } = props;
 
   const open = Boolean(selected);
 
-  const is_verified = +(userId ?? -1) === selected;
   const id = open ? "simple-popover" : undefined;
 
-  const handleUpdate = () => {
-    openUserDialog({ userId });
-  };
   const handleClose = () => {
     setSelected(null);
   };
@@ -47,30 +36,7 @@ export const UsersTableBtn = (props: UsersTableProps) => {
         horizontal: "left",
       }}
     >
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate("" + selected);
-        }}
-        sx={{ display: "block", width: 100 + "%" }}
-      >
-        Профиль
-      </Button>
-      <Button
-        disabled={!is_verified}
-        variant="contained"
-        sx={{ display: "block", width: 100 + "%" }}
-        onClick={handleUpdate}
-      >
-        Обновить пользователя
-      </Button>
-      <Button
-        disabled={true}
-        variant="contained"
-        sx={{ display: "block", width: 100 + "%" }}
-      >
-        Удалить пользователя
-      </Button>
+      <TableDdialogButton selected={selected} />
     </Popover>
   );
 };

@@ -16,5 +16,5 @@ export type UserFormValues = {
 export type UserProps = DialogProps & {
   text?: string;
   textBtn?: string;
-  userId?: string;
+  ownerId?: string;
 };
