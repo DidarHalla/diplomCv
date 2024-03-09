@@ -1,6 +1,6 @@
 import { routes } from "../../../constants/routes";
 import { LinkPanel } from "../../atoms/link/linkPanel";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { NavPanelContext } from "./NavPanel.Context";
 import { Home, NavigateNext } from "@mui/icons-material";
@@ -37,6 +37,9 @@ export const NavPanel: React.FC = () => {
 
   useNavPanel(obj, navPath);
 
+  const { userId } = useParams();
+  const { user, loading } = useUser(userId);
+
   return (
     <>
       <Styled.BreadCrumbs separator={<NavigateNext />}>
@@ -53,7 +56,9 @@ export const NavPanel: React.FC = () => {
               icon={option?.Icon}
               key={name}
             >
-              {option?.text}
+              {!loading && option?.text === userId
+                ? user?.profile.full_name || user?.email
+                : option?.text}
             </LinkPanel>
           );
         })}
