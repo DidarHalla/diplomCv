@@ -22,4 +22,4 @@ query Project($userId: ID!) {
     domain
     start_date
     end_date
-  }`
+  }}`

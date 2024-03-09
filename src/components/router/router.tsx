@@ -16,6 +16,7 @@ import { Positions } from "../pages/positions/positions";
 import { Skills } from "../pages/skills/skills";
 import { Languages } from "../pages/languages/languages";
 import { UserCvs } from "../pages/user-cvs/user-cvs";
+import { CvProjects } from "../pages/cv-projects/cv-projects";
 
 export const Router: React.FC = () => {
   return (
@@ -57,7 +58,7 @@ export const Router: React.FC = () => {
 
                   <Route path={routes.cvs.details} element={<h1>Подробности</h1>} />
                   <Route path={routes.cvs.skills} element={<h1>Навыки</h1>} />
-                  <Route path={routes.cvs.projects} element={<h1>g</h1>} />
+                  <Route path={routes.cvs.projects} element={<CvProjects/>} />
                   <Route path={routes.cvs.preview} element={<h1>Просмотр</h1>} />
 
                 </Route>
