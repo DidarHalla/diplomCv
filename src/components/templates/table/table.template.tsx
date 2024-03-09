@@ -10,7 +10,7 @@ import { TablePaginations } from "../../molecules/TablePaginations/tablePaginati
 import { TableBodyOrganism } from "../../organisms/tableBody/tableBody.organism";
 import { SearchTable } from "../../atoms/searchTable/searchTable.atom";
 
-import { UsersTableBtn } from "../../dialogs/usersTable.dialog";
+import { UsersTableBtn } from "../../dialogs/user/usersTable.dialog";
 
 type Order = "asc" | "desc";
 

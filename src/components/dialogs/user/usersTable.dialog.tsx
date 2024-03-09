@@ -1,7 +1,7 @@
 import { Button, Popover } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { useUserDialog } from "../organisms/forms/formUser";
+import { useUserDialog } from "../../organisms/forms/formUser";
 
 type UsersTableProps = {
   setSelected: React.Dispatch<React.SetStateAction<number | null>>;
