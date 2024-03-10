@@ -21,6 +21,7 @@ import { UserSkills } from "../pages/user-skills/user-skills";
 import { CvPreview } from "../pages/cv-preview/cv-preview";
 import { CvSkills } from "../pages/cv-skills/cv-skills";
 import { CvDetails } from "../pages/cv-details/cv-details";
+import { UserLanguages } from "../pages/user-language/user-languages";
 
 export const Router: React.FC = () => {
   return (
@@ -55,7 +56,7 @@ export const Router: React.FC = () => {
                   <Route path={routes.users.skills} element={<UserSkills />} />
                   <Route
                     path={routes.users.languages}
-                    element={<h1>Языки</h1>}
+                    element={<UserLanguages />}
                   />
                   <Route path={routes.users.cvs} element={<UserCvs />} />
                 </Route>

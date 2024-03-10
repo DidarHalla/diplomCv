@@ -23,7 +23,7 @@ export function SortTable(props: SortTableProps): JSX.Element {
         };
 
     const handleRequestSort = (
-        event: React.MouseEvent<unknown>,
+        _: React.MouseEvent<unknown>,
         property: string,
     ) => {
 
