@@ -1,6 +1,6 @@
 import { routes } from "../../../constants/routes";
 import { LinkPanel } from "../../atoms/link/linkPanel";
-import { Outlet, useLocation } from "react-router-dom";
+import { Location, Outlet, useLocation } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { NavPanelContext } from "./NavPanel.Context";
 import { Home, NavigateNext } from "@mui/icons-material";
@@ -8,7 +8,7 @@ import { NavPanelConfig } from "./NavPanel. types";
 // import { StyledBreadCrumbs } from "./NavPanel.styles";
 import * as Styled from "./NavPanel.styles";
 
-const useNavPanel = (config: NavPanelConfig, path) => {
+const useNavPanel = (config: NavPanelConfig, path: Location) => {
   const context = useContext(NavPanelContext);
   useEffect(() => {
     context.updateConfig(config);
