@@ -20,7 +20,7 @@ export const MenuDescription = (props:MenuDescriptionProps) => {
     <Box sx={{ width: '100%' }}>
 
       <Tabs value={location[3]??false} onChange={handleClick}  >
-        {tabsNavigates.map(({value,label})=><Tab value={value} label={label} />)}
+        {tabsNavigates.map(({value,label},i)=><Tab key={i} value={value} label={label} />)}
        
 
       </Tabs>

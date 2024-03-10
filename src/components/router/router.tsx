@@ -18,6 +18,7 @@ import { Languages } from "../pages/languages/languages";
 import { UserCvs } from "../pages/user-cvs/user-cvs";
 import { CvProjects } from "../pages/cv-projects/cv-projects";
 import { UserSkills } from "../pages/user-skills/user-skills";
+import { Cv } from "../pages/cv/cv";
 
 export const Router: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ export const Router: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path={routes.auth.root} element={<Auth />}>
+          <Route index element={<Navigate to={"login"}  replace />}  />
             <Route path={routes.auth.login} element={<Login />} />
             <Route path={routes.auth.signup} element={<Signup />} />
           </Route>
@@ -46,6 +48,7 @@ export const Router: React.FC = () => {
                     />
                   }
                 >
+                   <Route index element={<Navigate to={"profile"}  replace />}  />
                   <Route path={routes.users.profile} element={<UserUi />} />
                   <Route path={routes.users.skills} element={<UserSkills />} />
                   <Route
@@ -74,9 +77,10 @@ export const Router: React.FC = () => {
                     />
                   }
                 >
+                  <Route index element={<Navigate to={"details"}  replace />}  />
                   <Route
                     path={routes.cvs.details}
-                    element={<h1>Подробности</h1>}
+                    element={<Cv/>}
                   />
                   <Route path={routes.cvs.skills} element={<h1>Навыки</h1>} />
                   <Route path={routes.cvs.projects} element={<CvProjects />} />

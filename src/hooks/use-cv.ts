@@ -1,8 +1,8 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { CreateCvResult } from "../graphql/cv/cv.types";
-import { CreateCvInput, DeleteCvInput, DeleteResult } from "cv-graphql";
-import { CREATE_CV, DELETE_CV } from "../graphql/cv/cv";
-import { CVS } from "../graphql/cvs/cvs";
+import { CreateCvInput, Cv, DeleteCvInput, DeleteResult, UpdateCvInput } from "cv-graphql";
+import { CREATE_CV, DELETE_CV, UPDATE_CV } from "../graphql/cv/cv";
+import { CV, CVS } from "../graphql/cvs/cvs";
 import { USER } from "../graphql/query";
 
 export const useCreateCv = () => {
@@ -16,3 +16,16 @@ export const useDeleteCv=()=>{
       refetchQueries: [CVS, USER]
   });
 }
+
+export const useUpdateCv=()=>{
+  return useMutation<Cv, { cv: UpdateCvInput }>(UPDATE_CV, {
+      refetchQueries: [CVS, USER]
+  });
+}
+
+export const useQueryCv=(cvId:string)=>{
+  const query = useQuery<{cv:Cv}>(CV, { variables: { cvId } });
+  return { cv: query.data?.cv, ...query };
+}
+
+
