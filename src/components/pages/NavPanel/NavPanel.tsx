@@ -9,11 +9,7 @@ import * as Styled from "./NavPanel.styles";
 import { useUser } from "../../../hooks/use-users";
 import { Box, Toolbar } from "@mui/material";
 
-<<<<<<< HEAD
 const useNavPanel = (config: NavPanelConfig, path: Location) => {
-=======
-const useNavPanel = (config: NavPanelConfig, path:Location) => {
->>>>>>> 8d42b23ef6063aecdf7bfc636b7a3848b8a37590
   const context = useContext(NavPanelContext);
   useEffect(() => {
     context.updateConfig(config);
@@ -46,32 +42,33 @@ export const NavPanel: React.FC = () => {
 
   return (
     <>
-      <Box sx={{ width: '100%' }}>
-    <Toolbar variant="dense" >
-      <Styled.BreadCrumbs separator={<NavigateNext />}>
-        <LinkPanel to={routes.root} icon={Home} color="inherit" >
-          Home
-        </LinkPanel>
-        {links.map(({ name, to }) => {
-          const option = config[to];
-
-          return (
-            <LinkPanel
-              to={option?.to || to}
-              color={option?.color}
-              icon={option?.Icon}
-              key={name}
-            >
-              {!loading && option?.text === userId
-                ? user?.profile?.full_name || user?.email
-                : option?.text}
-              {/* {option?.text} */}
+      <Box sx={{ width: "100%" }}>
+        <Toolbar variant="dense">
+          <Styled.BreadCrumbs separator={<NavigateNext />}>
+            <LinkPanel to={routes.root} icon={Home} color="inherit">
+              Home
             </LinkPanel>
-          );
-        })}
-      </Styled.BreadCrumbs>
-      </Toolbar>
-      <Outlet />   </Box>
+            {links.map(({ name, to }) => {
+              const option = config[to];
+
+              return (
+                <LinkPanel
+                  to={option?.to || to}
+                  color={option?.color}
+                  icon={option?.Icon}
+                  key={name}
+                >
+                  {!loading && option?.text === userId
+                    ? user?.profile?.full_name || user?.email
+                    : option?.text}
+                  {/* {option?.text} */}
+                </LinkPanel>
+              );
+            })}
+          </Styled.BreadCrumbs>
+        </Toolbar>
+        <Outlet />{" "}
+      </Box>
     </>
   );
 };

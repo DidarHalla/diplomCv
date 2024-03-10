@@ -1,19 +1,14 @@
 #root {
-<<<<<<< HEAD
-  max-width: 100%;
-  /* margin: 0 auto; */
-=======
-  width:100%;
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
->>>>>>> 8d42b23ef6063aecdf7bfc636b7a3848b8a37590
   padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
 }
-html,body {
+html,
+body {
   width: 100%;
 }
