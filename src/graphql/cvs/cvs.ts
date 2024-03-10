@@ -18,6 +18,31 @@ export const CV=gql`
 query Cv($cvId: ID!) {
   cv (cvId: $cvId) {
     id
+    created_at
+    name
+    education
+    description
+    user{
+      id
+      email
+      profile{
+        id
+        first_name
+        last_name
+        full_name
+      }
+      department_name
+      position_name
+    }
+    languages{
+      name
+      proficiency
+    }
+    skills{
+      name
+      category
+      mastery
+    }
     projects{
       id
       name

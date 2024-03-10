@@ -53,7 +53,7 @@ export function MenuAppBar() {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box onClick={handleDrawerToggle} sx={{ width:"100%",textAlign: 'center' }}>
 
       <List>
 

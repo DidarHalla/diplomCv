@@ -8,6 +8,7 @@ import { NavPanelConfig } from "./NavPanel. types";
 // import { StyledBreadCrumbs } from "./NavPanel.styles";
 import * as Styled from "./NavPanel.styles";
 import { useUser } from "../../../hooks/use-users";
+import { Box, Toolbar } from "@mui/material";
 
 const useNavPanel = (config: NavPanelConfig, path:Location) => {
   const context = useContext(NavPanelContext);
@@ -42,8 +43,10 @@ export const NavPanel: React.FC = () => {
 
   return (
     <>
+      <Box sx={{ width: '100%' }}>
+    <Toolbar variant="dense" >
       <Styled.BreadCrumbs separator={<NavigateNext />}>
-        <LinkPanel to={routes.root} icon={Home} color="inherit">
+        <LinkPanel to={routes.root} icon={Home} color="inherit" >
           Home
         </LinkPanel>
         {links.map(({ name, to }) => {
@@ -63,8 +66,8 @@ export const NavPanel: React.FC = () => {
           );
         })}
       </Styled.BreadCrumbs>
-
-      <Outlet />
+      </Toolbar>
+      <Outlet />   </Box>
     </>
   );
 };

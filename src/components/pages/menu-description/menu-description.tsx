@@ -1,5 +1,5 @@
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, Toolbar } from "@mui/material";
 
 interface MenuDescriptionProps{
   tabsNavigates:{value:string,label:string}[]
@@ -18,14 +18,21 @@ export const MenuDescription = (props:MenuDescriptionProps) => {
 
   return (
     <Box sx={{ width: '100%' }}>
+   
+        <Tabs value={location[3]??false} onChange={handleClick} sx={{
 
-      <Tabs value={location[3]??false} onChange={handleClick}  >
-        {tabsNavigates.map(({value,label},i)=><Tab key={i} value={value} label={label} />)}
-       
+        position:"absolute",
+        left:"50vw",
+        transform:"translateX(-50%)",
 
-      </Tabs>
+        zIndex:"3",
+        }} >
+          {tabsNavigates.map(({value,label},i)=><Tab key={i} value={value} label={label} />)}
+        </Tabs>
+        <Toolbar/>
+    
 
       <Outlet />
-    </Box>
+       </Box>
   )
 }
