@@ -1,10 +1,11 @@
 import { TableUI } from "../../templates/table/table.template";
-import { headCellsUsers } from "../../../constants/tableHead.constant";
+import { headCellsUsers } from "../../../constants/headCells"; 
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
-import { createHederUsers } from "../../helpers/createHederUsers.helper";
+import { createHederTable } from "../../helpers/createHederTable.helper";
 import { useUsers } from "../../../hooks/use-users";
+import { UsersTableDdialogButton } from "../../atoms/usersTableDdialog-button/UsersTableDdialog-button";
 
 export function Users() {
   const [search, setSearch] = useState("");
@@ -12,7 +13,7 @@ export function Users() {
 
   const rows =
     users?.users?.map((user) => {
-      return createHederUsers(
+      return createHederTable(
         user.id,
         <Stack direction="row" spacing={2}>
           <Avatar src={user.profile.avatar ?? ""}></Avatar>
@@ -24,7 +25,6 @@ export function Users() {
         user.position_name ?? ""
       );
     }) ?? [];
-  const userId: string = JSON.parse(localStorage.getItem("user") ?? "null").id;
 
   if (loading) {
     return <>загрузка</>;
@@ -33,13 +33,15 @@ export function Users() {
   return (
     <>
       <TableUI
+
+        TableDdialogButton={UsersTableDdialogButton}
         search={search}
         setSearch={setSearch}
         rows={rows}
-        data={users ?? { users: [] }}
+        data={users?.users ??  [] }
         loading={loading}
-        userId={userId}
         headCells={headCellsUsers}
+        
       />
     </>
   );

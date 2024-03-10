@@ -20,3 +20,19 @@ export type UserProfileFormValues = {
 export type EmployeeProfileFormProps = {
   user: User | undefined;
 };
+
+export type ProfileResult = {
+  profile: Profile;
+};
+
+export type AddProfileSkillResult = {
+  addProfileSkill: Profile;
+};
+
+export type UpdateProfileSkillResult = {
+  updateProfileSkill: Profile;
+};
+
+export type DeleteProfileSkillResult = {
+  deleteProfileSkill: Profile;
+};

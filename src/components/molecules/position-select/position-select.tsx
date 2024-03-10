@@ -10,15 +10,8 @@ export const PositionSelect = ({ name, ...props }: PositionSelectProps) => {
     <Controller
       name={name}
       render={({ field }) => {
-        console.log(field);
-
         return (
-          <TextField
-            {...props}
-            {...field}
-            select
-            label={"Position"}
-          >
+          <TextField {...props} {...field} select label={"Position"}>
             <MenuItem value="">{"No position"}</MenuItem>
             {position?.positions.map(({ id, name }) => (
               <MenuItem key={id} value={id}>

@@ -7,6 +7,7 @@ import { Home, NavigateNext } from "@mui/icons-material";
 import { NavPanelConfig } from "./NavPanel. types";
 // import { StyledBreadCrumbs } from "./NavPanel.styles";
 import * as Styled from "./NavPanel.styles";
+import { useUser } from "../../../hooks/use-users";
 
 const useNavPanel = (config: NavPanelConfig, path: Location) => {
   const context = useContext(NavPanelContext);
@@ -36,6 +37,9 @@ export const NavPanel: React.FC = () => {
 
   useNavPanel(obj, navPath);
 
+  const { userId } = useParams();
+  const { user, loading } = useUser(userId);
+
   return (
     <>
       <Styled.BreadCrumbs separator={<NavigateNext />}>
@@ -46,8 +50,15 @@ export const NavPanel: React.FC = () => {
           const option = config[to];
 
           return (
-            <LinkPanel to={option?.to || to} color={option?.color} key={name}>
-              {option?.text}
+            <LinkPanel
+              to={option?.to || to}
+              color={option?.color}
+              icon={option?.Icon}
+              key={name}
+            >
+              {!loading && option?.text === userId
+                ? user?.profile.full_name || user?.email
+                : option?.text}
             </LinkPanel>
           );
         })}

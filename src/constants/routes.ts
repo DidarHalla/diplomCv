@@ -24,6 +24,7 @@ const cvRoutes = {
   details: "/cvs/:cvId/details",
   skills: "/cvs/:cvId/skills",
   preview: "/cvs/:cvId/preview",
+  projects:"/cvs/:cvId/projects"
 } as const;
 
 export const routes = {

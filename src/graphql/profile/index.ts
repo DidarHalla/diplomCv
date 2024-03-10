@@ -43,3 +43,55 @@ export const UPDATE_PROFILE = gql`
     }
   }
 `;
+
+export const PROFILE_SKILLS = gql`
+  query ProfileSkills($userId: ID!) {
+    profile(userId: $userId) {
+      id
+      skills {
+        name
+        category
+        mastery
+      }
+    }
+  }
+`;
+
+export const UPDATE_PROFILE_SKILL = gql`
+  mutation UpdateProfileSkill($skill: UpdateProfileSkillInput!) {
+    updateProfileSkill(skill: $skill) {
+      id
+      skills {
+        name
+        category
+        mastery
+      }
+    }
+  }
+`;
+
+export const ADD_PROFILE_SKILL = gql`
+  mutation AddProfileSkill($skill: AddProfileSkillInput!) {
+    addProfileSkill(skill: $skill) {
+      id
+      skills {
+        name
+        category
+        mastery
+      }
+    }
+  }
+`;
+
+export const DELETE_PROFILE_SKILL = gql`
+  mutation DeleteProfileSkill($skill: DeleteProfileSkillInput!) {
+    deleteProfileSkill(skill: $skill) {
+      id
+      skills {
+        name
+        category
+        mastery
+      }
+    }
+  }
+`;

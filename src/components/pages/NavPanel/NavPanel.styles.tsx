@@ -5,10 +5,12 @@ export const BreadCrumbs = styled(Breadcrumbs)<BreadcrumbsProps>(
     position: "fixed",
     top: 64,
     height: 44,
+    // margin: "0 auto",
     zIndex: 3,
     paddingTop: 20,
+
     backgroundColor: theme.palette.background.default,
-    width: "100%",
+    // width: "100%",
     maxWidth: theme.breakpoints.values.xl,
     ".MuiBreadcrumbs-ol": {
       flexWrap: "nowrap",

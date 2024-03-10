@@ -1,4 +1,4 @@
-import { User } from "cv-graphql";
+import { User,Cv, Project, Department } from "cv-graphql";
 import { Data } from "../../pages/users/users.types";
 
 
@@ -17,5 +17,6 @@ export interface TableBodyProps {
         top: number;
         left: number;
     }>>
-    data: { users: User[] | [] };
+  data:  User[]|Cv[] |Project[] |Department[]| [] ;
+
 }
