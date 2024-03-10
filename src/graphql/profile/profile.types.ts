@@ -1,5 +1,9 @@
 import { Profile, User } from "cv-graphql";
 
+export type ProfileResult = {
+  profile: Profile;
+};
+
 export type UpdateProfileResult = {
   updateProfile: Profile;
 };
@@ -19,10 +23,7 @@ export type UserProfileFormValues = {
 
 export type EmployeeProfileFormProps = {
   user: User | undefined;
-};
-
-export type ProfileResult = {
-  profile: Profile;
+  owner: boolean;
 };
 
 export type AddProfileSkillResult = {

@@ -24,18 +24,19 @@ import {
   EmployeeProfileFormProps,
   UserProfileFormValues,
 } from "../../../graphql/profile/profile.types";
-import { USER } from "../../../graphql/query";
+import { USER } from "../../../graphql/auth/query";
 
 export const UserProfilePage = (props: EmployeeProfileFormProps) => {
   const { userId = " " } = useParams();
-  const { user } = props;
+  const { user, owner } = props;
   const [uploadAvatar, { loading: isLoading }] = useAvatarUploaded();
   const userAdmin: boolean = true;
   const [updateProfile] = useUpdateProfile();
   const [updateUser, { loading }] = useUpdateUser();
 
   const [useAvatarDelete] = useMutation<null, { avatar: DeleteAvatarInput }>(
-    USER_AVATAR_DELETED, {refetchQueries: [USER]}
+    USER_AVATAR_DELETED,
+    { refetchQueries: [USER] }
   );
   const useAvatarDeleted = () => {
     useAvatarDelete({ variables: { avatar: { userId: userId ?? "" } } });
@@ -169,7 +170,7 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
           <div>
             <span className="member-since">
               A member since
-              {new Date(+(user?.profile.created_at ?? "")).toDateString()}
+              {new Date(+(user?.created_at ?? "")).toDateString()}
             </span>
           </div>
         </div>
@@ -183,27 +184,35 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
                   spacing={2}
                   direction="column"
                 >
-                  <TextField
-                    required
-                    {...register("profile.first_name")}
-                    label={user ? "" : "First Name"}
-                    className="first-name"
-                  />
-                  <DepartamentSelect name="department" />
-                  <TextField
-                    required
-                    {...register("profile.last_name")}
-                    label={user ? "" : "Last Name"}
-                    className="last-name"
-                  />
-                  <PositionSelect name="position" />
-                  <Button
-                    type="submit"
-                    disabled={!formState.isDirty || loading}
-                    variant="contained"
-                  >
-                    Contained
-                  </Button>
+                  <div>
+                    <TextField
+                      required
+                      {...register("profile.first_name")}
+                      label={user ? "" : "First-name"}
+                      className="first-name"
+                    />
+                    <DepartamentSelect name="department" />
+                  </div>
+                  <div>
+                    <TextField
+                      required
+                      {...register("profile.last_name")}
+                      label={user ? "" : "Last Name"}
+                      className="last-name"
+                    />
+                    <PositionSelect name="position" />
+                    {owner ? (
+                      <Button
+                        type="submit"
+                        disabled={!formState.isDirty || loading}
+                        variant="contained"
+                      >
+                        Contained
+                      </Button>
+                    ) : (
+                      <svg className="svg-unavailable"></svg>
+                    )}
+                  </div>
                 </Stack>
               </FormProvider>
             </div>

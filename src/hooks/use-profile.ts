@@ -17,7 +17,7 @@ import {
   UpdateProfileSkillInput,
   UploadAvatarInput,
 } from "cv-graphql";
-import { USER } from "../graphql/query";
+import { USER } from "../graphql/auth/query";
 import {
   AddProfileSkillResult,
   DeleteProfileSkillResult,

@@ -3,10 +3,10 @@ import { Box, Button, IconButton, TextField } from "@mui/material";
 import { routes } from "../../../constants/routes";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
-import { AuthUsers } from "../pages.types";
+import { AuthUsers } from "../auth/pages.types";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
-import { SIGN_NUP } from "../../../apollo client/mutation";
+import { SIGN_NUP } from "../../../graphql/auth/mutation";
 import { authReactive } from "../../../graphql/authReactive/authReactive";
 
 export const Signup: React.FC = () => {

@@ -24,13 +24,12 @@ const authLink = setContext((_, { header }) => {
 
 const authError = onError(({ graphQLErrors }) => {
   if (graphQLErrors)
-    graphQLErrors.forEach(({ message, extensions }) => {
-      const respMessage = extensions.response as { message: [string] };
-      addErrorMessage(respMessage.message[0] ?? message, "error");
-
+    graphQLErrors.forEach(({ message }) => {
       if (message === "Unauthorized") {
         authReactive.deleteAuth();
       }
+
+      addErrorMessage(message);
     });
 });
 

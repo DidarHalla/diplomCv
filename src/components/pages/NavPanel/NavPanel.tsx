@@ -5,9 +5,9 @@ import { useContext, useEffect } from "react";
 import { NavPanelContext } from "./NavPanel.Context";
 import { Home, NavigateNext } from "@mui/icons-material";
 import { NavPanelConfig } from "./NavPanel. types";
-// import { StyledBreadCrumbs } from "./NavPanel.styles";
 import * as Styled from "./NavPanel.styles";
 import { useUser } from "../../../hooks/use-users";
+import { Box, Toolbar } from "@mui/material";
 
 const useNavPanel = (config: NavPanelConfig, path: Location) => {
   const context = useContext(NavPanelContext);
@@ -42,29 +42,33 @@ export const NavPanel: React.FC = () => {
 
   return (
     <>
-      <Styled.BreadCrumbs separator={<NavigateNext />}>
-        <LinkPanel to={routes.root} icon={Home} color="inherit">
-          Home
-        </LinkPanel>
-        {links.map(({ name, to }) => {
-          const option = config[to];
-
-          return (
-            <LinkPanel
-              to={option?.to || to}
-              color={option?.color}
-              icon={option?.Icon}
-              key={name}
-            >
-              {!loading && option?.text === userId
-                ? user?.profile.full_name || user?.email
-                : option?.text}
+      <Box sx={{ width: "100%" }}>
+        <Toolbar variant="dense">
+          <Styled.BreadCrumbs separator={<NavigateNext />}>
+            <LinkPanel to={routes.root} icon={Home} color="inherit">
+              Home
             </LinkPanel>
-          );
-        })}
-      </Styled.BreadCrumbs>
+            {links.map(({ name, to }) => {
+              const option = config[to];
 
-      <Outlet />
+              return (
+                <LinkPanel
+                  to={option?.to || to}
+                  color={option?.color}
+                  icon={option?.Icon}
+                  key={name}
+                >
+                  {!loading && option?.text === userId
+                    ? user?.profile?.full_name || user?.email
+                    : option?.text}
+                  {/* {option?.text} */}
+                </LinkPanel>
+              );
+            })}
+          </Styled.BreadCrumbs>
+        </Toolbar>
+        <Outlet />{" "}
+      </Box>
     </>
   );
 };

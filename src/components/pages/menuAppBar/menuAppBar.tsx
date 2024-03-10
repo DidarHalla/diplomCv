@@ -1,26 +1,25 @@
-import { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useState } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import CssBaseline from '@mui/material/CssBaseline';
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import CssBaseline from "@mui/material/CssBaseline";
 
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { routes } from '../../../constants/routes';
-import { authReactive } from '../../../graphql/authReactive/authReactive';
-
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { routes } from "../../../constants/routes";
+import { authReactive } from "../../../graphql/authReactive/authReactive";
 
 const drawerWidth = 240;
 const navItems = [
@@ -31,14 +30,13 @@ const navItems = [
   { name: "Отделы", to: routes.departments },
   { name: "Должности", to: routes.positions },
   { name: "Навыки", to: routes.skills },
-  { name: "Языки", to: routes.languages }
+  { name: "Языки", to: routes.languages },
 ];
 
 export function MenuAppBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navigation = useNavigate()
-
+  const navigation = useNavigate();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -53,31 +51,36 @@ export function MenuAppBar() {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{ width: "100%", textAlign: "center" }}
+    >
       <List>
-
-        <NavLink to={navItems[0].to} style={{ textDecoration: "none" }} >
-
+        <NavLink to={navItems[0].to} style={{ textDecoration: "none" }}>
           <ListItem key={0} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center', color: "#0000EE" }} >
+            <ListItemButton sx={{ textAlign: "center", color: "#0000EE" }}>
               <ListItemText primary={navItems[0].name} />
             </ListItemButton>
-
           </ListItem>
         </NavLink>
         {navItems.slice(1).map((item, i) => (
-          <NavLink key={i}  to={item.to} style={{ textDecoration: "none" }} >
+          <NavLink key={i} to={item.to} style={{ textDecoration: "none" }}>
             {({ isActive }) => {
-              return (<ListItem  disablePadding>
-
-                <ListItemButton sx={{ textAlign: 'center', backgroundColor: isActive ? "#1976d2" : "", color: isActive ? 'white' : "", ":hover": { color: "#0000EE" } }} >
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
-
-              </ListItem>)
+              return (
+                <ListItem disablePadding>
+                  <ListItemButton
+                    sx={{
+                      textAlign: "center",
+                      backgroundColor: isActive ? "#1976d2" : "",
+                      color: isActive ? "white" : "",
+                      ":hover": { color: "#0000EE" },
+                    }}
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </ListItem>
+              );
             }}
-
           </NavLink>
         ))}
       </List>
@@ -85,17 +88,17 @@ export function MenuAppBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, marginTop: "45px" }}>
       <CssBaseline />
 
-      <AppBar  >
+      <AppBar>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, }}
+            sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
@@ -118,34 +121,51 @@ export function MenuAppBar() {
               id="menu-appbar"
               anchorEl={anchorEl}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem value={"profile"} onClick={() => {
-                navigation(routes.users.root + "/" + authReactive.getAuth().user$()?.id)
-                handleClose()
-              }}>Профиль</MenuItem>
+              <MenuItem
+                value={"profile"}
+                onClick={() => {
+                  navigation(
+                    routes.users.root + "/" + authReactive.getAuth().user$()?.id
+                  );
+                  handleClose();
+                }}
+              >
+                Профиль
+              </MenuItem>
 
-              <MenuItem value={"settings"} onClick={() => {
-                navigation(routes.settings)
-                handleClose()
-              }}>Настройки</MenuItem>
+              <MenuItem
+                value={"settings"}
+                onClick={() => {
+                  navigation(routes.settings);
+                  handleClose();
+                }}
+              >
+                Настройки
+              </MenuItem>
 
               <Divider />
 
-              <MenuItem value={"logout"} onClick={() => {
-                authReactive.deleteAuth()
-                navigation(routes.auth.login)
-                handleClose()
-              }}>Выйти</MenuItem>
+              <MenuItem
+                value={"logout"}
+                onClick={() => {
+                  authReactive.deleteAuth();
+                  navigation(routes.auth.login);
+                  handleClose();
+                }}
+              >
+                Выйти
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>
@@ -159,8 +179,10 @@ export function MenuAppBar() {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}

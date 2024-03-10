@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { UpdateUserInput, User } from "cv-graphql";
 import { UpdateUserResult, UserResult } from "../graphql/users/users.types";
-import { UPDATE_USER } from "../apollo client/mutation";
-import { USER } from "../graphql/query";
+import { UPDATE_USER } from "../graphql/auth/mutation";
+import { USER } from "../graphql/auth/query";
 import { USERS } from "../graphql/users/users";
 
 export const useUpdateUser = () => {

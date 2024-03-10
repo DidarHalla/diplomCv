@@ -47,12 +47,12 @@ export const UserSkills = () => {
     });
   };
 
-  const delete_skill = (entityIds: string[]) => {
+  const delete_skill = (entityName: string[]) => {
     return DeleteSkill({
       variables: {
         skill: {
           userId,
-          name: entityIds,
+          name: entityName,
         },
       },
     });
@@ -67,7 +67,6 @@ export const UserSkills = () => {
             alignItems: "center",
           }}
         >
-          {" "}
           <AddSkiil onClick={add_skill} />
           <DeleteSkills onDelete={delete_skill} />
         </div>

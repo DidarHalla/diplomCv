@@ -3,11 +3,11 @@ import { Box, Button, IconButton, TextField } from "@mui/material";
 import { useCallback, useState } from "react";
 import { routes } from "../../../constants/routes";
 import { useNavigate } from "react-router-dom";
-import { AuthUsers } from "../pages.types";
+import { AuthUsers } from "../auth/pages.types";
 import { useForm } from "react-hook-form";
 import { useLazyQuery } from "@apollo/client";
 
-import { LOGIN } from "../../../graphql/query";
+import { LOGIN } from "../../../graphql/auth/query";
 import { authReactive } from "../../../graphql/authReactive/authReactive";
 
 export const Login: React.FC = () => {
