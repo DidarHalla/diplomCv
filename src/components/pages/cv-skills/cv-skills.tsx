@@ -1,32 +1,34 @@
 import { useParams } from "react-router";
 import {
-  useProfileSkillDelete,
-  useProfileSkillUpdate,
-  useProfileSkills,
-} from "../../../hooks/use-profile";
-import { useSkillDialog } from "../../dialogs/skill/skill";
-import { useProfileSkillAdd } from "../../../hooks/use-skill";
+  useAddCvSkill,
+  useCvSkills,
+  useDeleteCvSkill,
+  useUpdateCvSkill,
+} from "../../../hooks/use-cvs";
 import { Container } from "@mui/material";
 import { AddSkiil } from "../../molecules/add-skills-btn/add-skills-btn";
-import { SkillMastery } from "cv-graphql";
-import { SkillBox } from "../../molecules/skill-box/skill-box";
 import { DeleteSkills } from "../../molecules/delete-skill/delete-skill";
+import { SkillBox } from "../../molecules/skill-box/skill-box";
+import { useSkillDialog } from "../../dialogs/skill/skill";
+import { SkillMastery } from "cv-graphql";
 
-export const UserSkills = () => {
-  const [AddProfileSkill] = useProfileSkillAdd();
-  const [UpProfileSkill] = useProfileSkillUpdate();
-  const { userId = "" } = useParams();
-  const { skills, classes } = useProfileSkills(userId);
-  const [OpenSkillDialog] = useSkillDialog();
+export const CvSkills = () => {
+  const { cvId = "" } = useParams();
+  const { skills, classes } = useCvSkills(cvId);
+
+  const [AddCvSkill] = useAddCvSkill();
+  const [UpCvSkill] = useUpdateCvSkill();
+  const [DeleteCvSkill] = useDeleteCvSkill();
   const YourSkills = skills.map((skills) => skills.name);
-  const [DeleteSkill] = useProfileSkillDelete();
+  const [OpenSkillDialog] = useSkillDialog();
+
   const add_skill = () => {
     OpenSkillDialog({
       title: "Add Skill",
       YourSkills,
       onConfirm({ category, mastery, name }) {
-        return AddProfileSkill({
-          variables: { skill: { userId, category, mastery, name } },
+        return AddCvSkill({
+          variables: { skill: { cvId, category, mastery, name } },
         });
       },
     });
@@ -36,10 +38,9 @@ export const UserSkills = () => {
     OpenSkillDialog({
       title: "Update Skill",
       YourSkills,
-      userId: userId,
       onConfirm({ category, mastery, name }) {
-        return UpProfileSkill({
-          variables: { skill: { userId, category, mastery, name } },
+        return UpCvSkill({
+          variables: { skill: { cvId, category, mastery, name } },
         });
       },
       skill,
@@ -48,10 +49,10 @@ export const UserSkills = () => {
   };
 
   const delete_skill = (entityName: string[]) => {
-    return DeleteSkill({
+    return DeleteCvSkill({
       variables: {
         skill: {
-          userId,
+          cvId,
           name: entityName,
         },
       },
@@ -67,6 +68,7 @@ export const UserSkills = () => {
             alignItems: "center",
           }}
         >
+          {" "}
           <AddSkiil onClick={add_skill} />
           <DeleteSkills onDelete={delete_skill} />
         </div>

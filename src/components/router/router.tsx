@@ -18,6 +18,8 @@ import { Languages } from "../pages/languages/languages";
 import { UserCvs } from "../pages/user-cvs/user-cvs";
 import { CvProjects } from "../pages/cv-projects/cv-projects";
 import { UserSkills } from "../pages/user-skills/user-skills";
+import { CvSkills } from "../pages/cv-skills/cv-skills";
+import { CvDetails } from "../pages/cv-details/cv-details";
 
 export const Router: React.FC = () => {
   return (
@@ -74,11 +76,8 @@ export const Router: React.FC = () => {
                     />
                   }
                 >
-                  <Route
-                    path={routes.cvs.details}
-                    element={<h1>Подробности</h1>}
-                  />
-                  <Route path={routes.cvs.skills} element={<h1>Навыки</h1>} />
+                  <Route path={routes.cvs.details} element={<CvDetails />} />
+                  <Route path={routes.cvs.skills} element={<CvSkills />} />
                   <Route path={routes.cvs.projects} element={<CvProjects />} />
                   <Route
                     path={routes.cvs.preview}

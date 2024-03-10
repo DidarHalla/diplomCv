@@ -24,7 +24,7 @@ import {
   EmployeeProfileFormProps,
   UserProfileFormValues,
 } from "../../../graphql/profile/profile.types";
-import { USER } from "../../../graphql/query";
+import { USER } from "../../../graphql/auth/query";
 
 export const UserProfilePage = (props: EmployeeProfileFormProps) => {
   const { userId = " " } = useParams();
@@ -35,7 +35,8 @@ export const UserProfilePage = (props: EmployeeProfileFormProps) => {
   const [updateUser, { loading }] = useUpdateUser();
 
   const [useAvatarDelete] = useMutation<null, { avatar: DeleteAvatarInput }>(
-    USER_AVATAR_DELETED, {refetchQueries: [USER]}
+    USER_AVATAR_DELETED,
+    { refetchQueries: [USER] }
   );
   const useAvatarDeleted = () => {
     useAvatarDelete({ variables: { avatar: { userId: userId ?? "" } } });

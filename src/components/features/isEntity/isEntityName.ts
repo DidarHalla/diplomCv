@@ -1,17 +1,17 @@
 import { makeVar } from "@apollo/client";
 
-export const nameSkillVar = makeVar<string[]>([]);
+export const entityNameVar = makeVar<string[]>([]);
 
-export const setNameSkill = (name: string) => {
-  const entityId = nameSkillVar();
-  if (entityId.includes(name)) {
-    nameSkillVar(entityId.filter((n) => n !== name));
+export const setEntityName = (name: string) => {
+  const entities = entityNameVar();
+  if (entities.includes(name)) {
+    entityNameVar(entities.filter((n) => n !== name));
     return;
   }
 
-  nameSkillVar([...entityId, name]);
+  entityNameVar([...entities, name]);
 };
 
-export const resetNameSkills = () => {
-  nameSkillVar([]);
+export const resetEntityName = () => {
+  entityNameVar([]);
 };

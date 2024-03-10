@@ -3,6 +3,7 @@ import { CvFormValues, CvProps } from "./formCv.types";
 import { useCreateCv } from "../../../hooks/use-cv";
 import {
   Button,
+  Container,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -20,17 +21,24 @@ const Cv = ({ userId, closeDialog }: CvProps) => {
       name: "",
       education: "",
       description: "",
+      projectsIds: [],
     },
   });
 
   const [createCv, { loading }] = useCreateCv();
 
-  const submit = ({ name, education, description }: CvFormValues) => {
+  const submit = ({
+    name,
+    education,
+    description,
+    projectsIds,
+  }: CvFormValues) => {
     createCv({
       variables: {
         cv: {
           name,
           education,
+          projectsIds,
           description,
           userId,
         },
@@ -40,38 +48,51 @@ const Cv = ({ userId, closeDialog }: CvProps) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(submit)}>
-        <DialogTitle>Create Cv</DialogTitle>
-        <DialogContent>
-          <TextField
-            {...register("name", {
-              validate: (val: string) => {
-                if (!val) {
-                  return "Required field";
-                }
-              },
-            })}
-            label="Name"
-            error={!!errors.name}
-            helperText={errors.name?.message}
-            autoFocus
-          />
-          <TextField label="Education" {...register("education")} />
-          <TextField label="Description" {...register("description")} />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            type="submit"
-            disabled={loading || !isDirty}
+      <Container>
+        <form onSubmit={handleSubmit(submit)}>
+          <DialogTitle>Create Cv</DialogTitle>
+          <DialogContent
+            sx={{
+              overflowY: "auto",
+              paddingRight: "24px",
+              paddingBottom: "20px",
+              paddingLeft: "24px",
+              display: "grid",
+              gridTemplateColumns: "1fr" + " 1fr",
+              gap: "32px",
+              paddingTop: "16px" + " !important",
+            }}
           >
-            Create
-          </Button>
-        </DialogActions>
-        <Button variant="outlined" onClick={closeDialog}>
-          Cancel
-        </Button>
-      </form>
+            <TextField
+              {...register("name", {
+                validate: (val: string) => {
+                  if (!val) {
+                    return "Required field";
+                  }
+                },
+              })}
+              label="Name"
+              error={!!errors.name}
+              helperText={errors.name?.message}
+              autoFocus
+            />
+            <TextField label="Education" {...register("education")} />
+            <TextField label="Description" {...register("description")} />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              type="submit"
+              disabled={loading || !isDirty}
+            >
+              Create
+            </Button>
+            <Button variant="outlined" onClick={closeDialog}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </form>
+      </Container>
     </>
   );
 };
@@ -80,5 +101,5 @@ export const useCvDialog = dialogHelpers<CvProps>(
   (props) => () => {
     return <Cv {...props} />;
   },
-  { maxWidth: "sm", fullWidth: true }
+  { maxWidth: "md", fullWidth: true }
 );
