@@ -13,9 +13,42 @@ export const CVS = gql`
     }
   }
 `;
+<<<<<<< HEAD
 export const CV = gql`
   query Cv($cvId: ID!) {
     cv(cvId: $cvId) {
+=======
+export const CV=gql`
+query Cv($cvId: ID!) {
+  cv (cvId: $cvId) {
+    id
+    created_at
+    name
+    education
+    description
+    user{
+      id
+      email
+      profile{
+        id
+        first_name
+        last_name
+        full_name
+      }
+      department_name
+      position_name
+    }
+    languages{
+      name
+      proficiency
+    }
+    skills{
+      name
+      category
+      mastery
+    }
+    projects{
+>>>>>>> 8d42b23ef6063aecdf7bfc636b7a3848b8a37590
       id
       name
       education

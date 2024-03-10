@@ -1,8 +1,12 @@
 import { Breadcrumbs, BreadcrumbsProps, styled } from "@mui/material";
 
 export const BreadCrumbs = styled(Breadcrumbs)<BreadcrumbsProps>(
+
   ({ theme }) => ({
+    textAlign:"center",
+    width:100+"%",
     position: "fixed",
+    left:0,
     top: 64,
     height: 44,
     // margin: "0 auto",

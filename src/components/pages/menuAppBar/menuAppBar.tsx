@@ -51,7 +51,12 @@ export function MenuAppBar() {
   };
 
   const drawer = (
+<<<<<<< HEAD
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+=======
+    <Box onClick={handleDrawerToggle} sx={{ width:"100%",textAlign: 'center' }}>
+
+>>>>>>> 8d42b23ef6063aecdf7bfc636b7a3848b8a37590
       <List>
         <NavLink to={navItems[0].to} style={{ textDecoration: "none" }}>
           <ListItem key={0} disablePadding>

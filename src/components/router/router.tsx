@@ -5,7 +5,7 @@ import { Login } from "../pages/login/login";
 import { Signup } from "../pages/signup/signup";
 import { Users } from "../pages/users/users";
 import { UserUi } from "../pages/user-profile/UserUi";
-import { MenuDescription } from "../pages/user/user";
+import { MenuDescription } from "../pages/menu-description/menu-description";
 import { MenuAppBar } from "../pages/menuAppBar/menuAppBar";
 import { CheckRegistr } from "../pages/checkRegistr/checkRegistr";
 import { NavPanel } from "../pages/NavPanel/NavPanel";
@@ -18,6 +18,7 @@ import { Languages } from "../pages/languages/languages";
 import { UserCvs } from "../pages/user-cvs/user-cvs";
 import { CvProjects } from "../pages/cv-projects/cv-projects";
 import { UserSkills } from "../pages/user-skills/user-skills";
+import { CvPreview } from "../pages/cv-preview/cv-preview";
 import { CvSkills } from "../pages/cv-skills/cv-skills";
 import { CvDetails } from "../pages/cv-details/cv-details";
 
@@ -27,6 +28,7 @@ export const Router: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path={routes.auth.root} element={<Auth />}>
+            <Route index element={<Navigate to={"login"} replace />} />
             <Route path={routes.auth.login} element={<Login />} />
             <Route path={routes.auth.signup} element={<Signup />} />
           </Route>
@@ -48,6 +50,7 @@ export const Router: React.FC = () => {
                     />
                   }
                 >
+                  <Route index element={<Navigate to={"profile"} replace />} />
                   <Route path={routes.users.profile} element={<UserUi />} />
                   <Route path={routes.users.skills} element={<UserSkills />} />
                   <Route
@@ -76,13 +79,11 @@ export const Router: React.FC = () => {
                     />
                   }
                 >
+                  <Route index element={<Navigate to={"details"} replace />} />
                   <Route path={routes.cvs.details} element={<CvDetails />} />
                   <Route path={routes.cvs.skills} element={<CvSkills />} />
                   <Route path={routes.cvs.projects} element={<CvProjects />} />
-                  <Route
-                    path={routes.cvs.preview}
-                    element={<h1>Просмотр</h1>}
-                  />
+                  <Route path={routes.cvs.preview} element={<CvPreview />} />
                 </Route>
 
                 <Route path={routes.departments} element={<Departments />} />

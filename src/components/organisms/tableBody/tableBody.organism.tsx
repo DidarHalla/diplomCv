@@ -58,7 +58,8 @@ export const TableBodyOrganism = (props: TableBodyProps) => {
           >
             {row.data.map((cell, ind) => {
               return (
-                <TableCell key={ind} align="right">
+                <TableCell key={ind} align="left" sx={{wordBreak: "break-all"
+                }}>
                   {cell}
                 </TableCell>
               );

@@ -14,3 +14,18 @@ export const CREATE_CV = gql`
     }
   }
 `;
+export const DELETE_CV =gql`
+mutation DeleteCv($cv:DeleteCvInput!){
+  deleteCv(cv:$cv){
+    affected
+  }
+}
+`
+export const UPDATE_CV=gql`
+mutation UpdateCv($cv:UpdateCvInput!){
+  updateCv(cv:$cv){
+  id
+    name
+  }
+}
+`

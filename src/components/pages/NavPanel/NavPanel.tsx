@@ -7,8 +7,13 @@ import { Home, NavigateNext } from "@mui/icons-material";
 import { NavPanelConfig } from "./NavPanel. types";
 import * as Styled from "./NavPanel.styles";
 import { useUser } from "../../../hooks/use-users";
+import { Box, Toolbar } from "@mui/material";
 
+<<<<<<< HEAD
 const useNavPanel = (config: NavPanelConfig, path: Location) => {
+=======
+const useNavPanel = (config: NavPanelConfig, path:Location) => {
+>>>>>>> 8d42b23ef6063aecdf7bfc636b7a3848b8a37590
   const context = useContext(NavPanelContext);
   useEffect(() => {
     context.updateConfig(config);
@@ -41,8 +46,10 @@ export const NavPanel: React.FC = () => {
 
   return (
     <>
+      <Box sx={{ width: '100%' }}>
+    <Toolbar variant="dense" >
       <Styled.BreadCrumbs separator={<NavigateNext />}>
-        <LinkPanel to={routes.root} icon={Home} color="inherit">
+        <LinkPanel to={routes.root} icon={Home} color="inherit" >
           Home
         </LinkPanel>
         {links.map(({ name, to }) => {
@@ -63,8 +70,8 @@ export const NavPanel: React.FC = () => {
           );
         })}
       </Styled.BreadCrumbs>
-
-      <Outlet />
+      </Toolbar>
+      <Outlet />   </Box>
     </>
   );
 };
