@@ -21,3 +21,11 @@ mutation DeleteCv($cv:DeleteCvInput!){
   }
 }
 `
+export const UPDATE_CV=gql`
+mutation UpdateCv($cv:UpdateCvInput!){
+  updateCv(cv:$cv){
+  id
+    name
+  }
+}
+`
