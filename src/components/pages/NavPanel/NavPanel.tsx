@@ -1,6 +1,6 @@
 import { routes } from "../../../constants/routes";
 import { LinkPanel } from "../../atoms/link/linkPanel";
-import { Location, Outlet, useLocation } from "react-router-dom";
+import { Location, Outlet, useLocation, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { NavPanelContext } from "./NavPanel.Context";
 import { Home, NavigateNext } from "@mui/icons-material";
