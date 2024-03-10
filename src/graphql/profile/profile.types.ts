@@ -37,3 +37,15 @@ export type UpdateProfileSkillResult = {
 export type DeleteProfileSkillResult = {
   deleteProfileSkill: Profile;
 };
+
+export type AddProfileLanguageResult = {
+  addProfileLanguage: Profile;
+};
+
+export type UpdateProfileLanguageResult = {
+  updateProfileLanguage: Profile;
+};
+
+export type DeleteProfileLanguageResult = {
+  deleteProfileLanguage: Profile;
+};
