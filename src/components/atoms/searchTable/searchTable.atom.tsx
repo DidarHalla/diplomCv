@@ -8,7 +8,7 @@ interface SearchTableProps{
 }
 
 function debounce<T extends React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>>(func:(event:T)=>void, timeout:number){
-    let timer:number|undefined;
+    let timer:ReturnType<typeof setTimeout>|undefined;
     return (even:T) => {
       clearTimeout(timer);
       timer = setTimeout(() => { func(even); }, timeout);
