@@ -81,6 +81,7 @@ const Cv = ({ userId, closeDialog }: CvProps) => {
           </DialogContent>
           <DialogActions>
             <Button
+              sx={{ marginTop: 0 }}
               variant="contained"
               type="submit"
               disabled={loading || !isDirty}

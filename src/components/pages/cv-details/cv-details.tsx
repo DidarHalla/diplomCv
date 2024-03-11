@@ -4,10 +4,12 @@ import { Controller, useForm } from "react-hook-form";
 import { CvFormValues } from "../../organisms/forms/formCv.types";
 import { Button, Container, TextField } from "@mui/material";
 import { authReactive } from "../../../graphql/authReactive/authReactive";
+import { useEffect } from "react";
+import { Cv } from "cv-graphql";
 
 export const CvDetails = () => {
   const { cvId = "" } = useParams();
-  const { cv } = useCv(cvId);
+  const { cv, loading } = useCv(cvId);
   const userId = authReactive.getAuth().user$()?.id;
 
   const {
@@ -23,6 +25,24 @@ export const CvDetails = () => {
       description: cv?.description,
     },
   });
+
+  useEffect(() => {
+    const upForm = async () => {
+      new Promise((resolve: (value: Cv) => void) => {
+        if (cv) {
+          resolve(cv);
+        }
+      }).then((res) => {
+        reset({
+          name: res?.name,
+          education: res?.education || "",
+          description: res?.description,
+        });
+      });
+    };
+
+    upForm();
+  }, [loading]);
 
   const [updateCv] = useUpdateCv();
 
@@ -56,17 +76,28 @@ export const CvDetails = () => {
               },
             })}
             autoFocus
-            label={"Name"}
+            label="Name"
+            InputLabelProps={{ shrink: true }}
             error={!!errors.name}
             helperText={errors.name?.message || ""}
           />
 
-          <TextField {...register("education")} label={"Education"} />
+          <TextField
+            {...register("education")}
+            label="Education"
+            InputLabelProps={{ shrink: true }}
+          />
           <Controller
             name="description"
             control={control}
             render={({ field }) => (
-              <TextField {...field} label={"Description"} multiline rows={7} />
+              <TextField
+                {...field}
+                label={"Description"}
+                InputLabelProps={{ shrink: true }}
+                multiline
+                rows={5}
+              />
             )}
           />
           {userId === cv?.user?.id && (

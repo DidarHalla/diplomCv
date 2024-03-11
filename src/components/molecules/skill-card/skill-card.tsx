@@ -37,7 +37,6 @@ export const SkillCard = ({ skill, onUpdate }: SkillCardProps) => {
       setEntityName(skill.name);
       return;
     }
-    console.log(selected, 222);
     onUpdate(skill);
   };
 

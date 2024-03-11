@@ -6,8 +6,8 @@ import { NavPanelContext } from "./NavPanel.Context";
 import { Home, NavigateNext } from "@mui/icons-material";
 import { NavPanelConfig } from "./NavPanel. types";
 import * as Styled from "./NavPanel.styles";
-import { useUser } from "../../../hooks/use-users";
 import { Box, Toolbar } from "@mui/material";
+import { DateUser } from "../../atoms/navPanel-dateUser/navPanel-dateUser.atom";
 
 const useNavPanel = (config: NavPanelConfig, path: Location) => {
   const context = useContext(NavPanelContext);
@@ -38,7 +38,6 @@ export const NavPanel: React.FC = () => {
   useNavPanel(obj, navPath);
 
   const { userId } = useParams();
-  const { user, loading } = useUser(userId);
 
   return (
     <>
@@ -58,10 +57,11 @@ export const NavPanel: React.FC = () => {
                   icon={option?.Icon}
                   key={name}
                 >
-                  {!loading && option?.text === userId
-                    ? user?.profile?.full_name || user?.email
-                    : option?.text}
-                  {/* {option?.text} */}
+                  {userId ? (
+                    <DateUser userId={userId} text={option?.text} />
+                  ) : (
+                    option?.text
+                  )}
                 </LinkPanel>
               );
             })}

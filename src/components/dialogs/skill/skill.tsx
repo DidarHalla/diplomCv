@@ -62,6 +62,7 @@ const SkillMastery = ({
             Cancel
           </Button>
           <Button
+            sx={{ marginTop: 0 }}
             variant="contained"
             type="submit"
             disabled={isLoading || !formState.isDirty}
