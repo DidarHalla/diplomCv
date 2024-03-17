@@ -2,7 +2,10 @@ import { useParams } from "react-router-dom";
 import { useQueryCv } from "../../../hooks/use-cv";
 import { Box, Divider, Button, Stack } from "@mui/material";
 import { useRef } from "react";
+import { useExportPdf } from "../../../hooks/use-exportPdf";
 export const CvPreview = () => {
+  const [exportPdf]= useExportPdf()
+
   const { cvId } = useParams();
   const { cv } = useQueryCv(cvId ?? "");
   const ref=useRef<HTMLDivElement>(null)
@@ -23,9 +26,8 @@ export const CvPreview = () => {
         </Box>
         <Button
           variant="contained"
-          disabled={true}
           onClick={() => {
-            
+            exportPdf({variables:{pdf:{html:ref.current?.innerHTML??""}}})
           }}
         >
           export pdf
