@@ -28,7 +28,6 @@ export const Login: React.FC = () => {
   });
 
   const [login] = useLazyQuery(LOGIN);
-
   const navigation = useNavigate();
 
   const submit = async ({ email, password }: AuthUsers) => {

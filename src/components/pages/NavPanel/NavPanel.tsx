@@ -67,7 +67,7 @@ export const NavPanel: React.FC = () => {
             })}
           </Styled.BreadCrumbs>
         </Toolbar>
-        <Outlet />{" "}
+        <Outlet />
       </Box>
     </>
   );
