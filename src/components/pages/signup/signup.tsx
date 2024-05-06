@@ -51,7 +51,6 @@ export const Signup: React.FC = () => {
           flexDirection: "column",
           justifyContent: "center",
           width: "30vw",
-          textAlign: "center",
           gap: "1rem",
         }}
       >
@@ -75,7 +74,7 @@ export const Signup: React.FC = () => {
           InputProps={{
             endAdornment: (
               <IconButton onClick={passwordVision}>
-                {!vision ? <Visibility /> : <VisibilityOff />}
+                {vision ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             ),
           }}

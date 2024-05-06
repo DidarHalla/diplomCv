@@ -6,43 +6,45 @@ import {
 } from "../../features/isEntity/isEntityName";
 import { useReactiveVar } from "@apollo/client";
 import { Typography } from "@mui/material";
-import { useProfileSkillDelete } from "../../../hooks/use-profile";
 
 type DeleteSkillProps = {
-  closeDialog: () => void;
-  id: string | undefined;
+  onDelete(entityIds: string[]): Promise<unknown>;
 };
 
-export const DeleteSkills = ({ id, closeDialog }: DeleteSkillProps) => {
+export const DeleteSkills = ({ onDelete }: DeleteSkillProps) => {
   const nameSkills = useReactiveVar(entityNameVar);
-  const [DeleteSkill] = useProfileSkillDelete();
 
-  const delete_skill = (entityName: string[]) => {
-    return DeleteSkill({
-      variables: {
-        skill: {
-          userId: id || "",
-          name: entityName,
-        },
-      },
+  const handleDelete = () => {
+    onDelete(nameSkills).then(() => {
+      resetEntityName();
     });
   };
 
-  const handleDelete = () => {
-    delete_skill(nameSkills).then(() => {
-      resetEntityName();
-      closeDialog();
-    });
+  const cancelDeleteSkill = () => {
+    resetEntityName();
   };
 
   return (
     <>
-      <Button
-        onClick={handleDelete}
-        style={{ marginLeft: "15px", color: "red" }}
-      >
-        <Delete color="error" /> <Typography>delete</Typography>
-      </Button>
+      {" "}
+      {!!nameSkills.length && (
+        <>
+          {" "}
+          <Button
+            onClick={handleDelete}
+            style={{ marginTop: "30px", marginLeft: "15px" }}
+          >
+            <Delete color="primary" /> <Typography>delete</Typography>
+          </Button>
+          <Button
+            color="secondary"
+            onClick={cancelDeleteSkill}
+            sx={{ mt: "30px", marginLeft: "15px" }}
+          >
+            <Typography>cancel</Typography>
+          </Button>
+        </>
+      )}
     </>
   );
 };

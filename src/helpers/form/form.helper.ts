@@ -1,7 +1,6 @@
 import { FC, useCallback, useRef } from "react";
 import { DialogOptions, IDialog } from "./form.types.helper";
 import { makeVar } from "@apollo/client";
-import { resetEntityName } from "../../components/features/isEntity/isEntityName";
 
 export const dialogs = makeVar<IDialog[]>([]);
 let id = 0;
@@ -29,7 +28,6 @@ export const dialogHelpers = <T>(
           })
         );
       }
-      resetEntityName();
     }, []);
 
     const openDialog = useCallback((props?: Omit<T, "closeDialog">) => {

@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
 import {
+  useProfileSkillDelete,
   useProfileSkillUpdate,
   useProfileSkills,
 } from "../../../hooks/use-profile";
@@ -9,6 +10,7 @@ import { Container } from "@mui/material";
 import { AddSkiil } from "../../molecules/add-skills-btn/add-skills-btn";
 import { SkillMastery } from "cv-graphql";
 import { SkillBox } from "../../molecules/skill-box/skill-box";
+import { DeleteSkills } from "../../molecules/delete-skill/delete-skill";
 
 export const UserSkills = () => {
   const [AddProfileSkill] = useProfileSkillAdd();
@@ -17,7 +19,7 @@ export const UserSkills = () => {
   const { skills, classes } = useProfileSkills(userId);
   const [OpenSkillDialog] = useSkillDialog();
   const YourSkills = skills.map((skills) => skills.name);
-
+  const [DeleteSkill] = useProfileSkillDelete();
   const add_skill = () => {
     OpenSkillDialog({
       title: "Add Skill",
@@ -45,6 +47,17 @@ export const UserSkills = () => {
     });
   };
 
+  const delete_skill = (entityName: string[]) => {
+    return DeleteSkill({
+      variables: {
+        skill: {
+          userId,
+          name: entityName,
+        },
+      },
+    });
+  };
+
   return (
     <>
       <Container>
@@ -55,6 +68,7 @@ export const UserSkills = () => {
           }}
         >
           <AddSkiil onClick={add_skill} />
+          <DeleteSkills onDelete={delete_skill} />
         </div>
         {Object.entries(classes).map(([category, skills]) => {
           return (

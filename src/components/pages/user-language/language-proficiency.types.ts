@@ -11,6 +11,5 @@ export type LanguageProficiencyProps = DialogProps & {
   ownLanguages: string[];
   language?: LanguageProficiency;
   disableLanguageSelect?: boolean;
-  userId: string | undefined;
   onConfirm(values: LanguageProficiencyFormValues): Promise<unknown>;
 };
