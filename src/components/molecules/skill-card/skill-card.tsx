@@ -1,8 +1,5 @@
 import { SkillMastery } from "cv-graphql";
-
 import { useReactiveVar } from "@apollo/client";
-
-import { MouseEvent } from "react";
 import { Button, LinearProgress, Typography } from "@mui/material";
 import { colorMastery } from "../../../helpers/color-mastery";
 import {
@@ -31,27 +28,13 @@ export const SkillCard = ({ skill, onUpdate }: SkillCardProps) => {
   const selected = nameSkills.includes(skill.name);
 
   const onClickCard = () => {
-    console.log(selected, 111);
-
-    if (nameSkills.length) {
-      setEntityName(skill.name);
-      return;
-    }
-    onUpdate(skill);
-  };
-
-  const handleContextMenu = (event: MouseEvent) => {
-    event.preventDefault();
     setEntityName(skill.name);
+    onUpdate(skill);
   };
 
   return (
     <div>
-      <Button
-        onClick={onClickCard}
-        onContextMenu={handleContextMenu}
-        color={"secondary"}
-      >
+      <Button onClick={onClickCard} color={"secondary"}>
         <Typography>{skill.name}</Typography>
       </Button>
 

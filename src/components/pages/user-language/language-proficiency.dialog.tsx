@@ -11,6 +11,12 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { LanguageProficiencyProps } from "./language-proficiency.types";
 import { dialogHelpers } from "../../../helpers/form/form.helper";
+import { DeleteLanguages } from "./deleted.profile.language";
+import {
+  entityNameVar,
+  resetEntityName,
+} from "../../features/isEntity/isEntityName";
+import { useReactiveVar } from "@apollo/client";
 
 enum Proficiency {
   A1 = "A1",
@@ -27,6 +33,7 @@ const LanguageProficiencyDialog = ({
   ownLanguages,
   language,
   disableLanguageSelect,
+  userId,
   onConfirm,
   closeDialog,
 }: LanguageProficiencyProps) => {
@@ -38,12 +45,17 @@ const LanguageProficiencyDialog = ({
     },
   });
   const { formState, handleSubmit } = methods;
-
+  const nameLanguage = useReactiveVar(entityNameVar);
   const onSubmit = (values: LanguageProficiencyFormValues) => {
     setIsLoading(true);
     onConfirm(values)
-      .then(closeDialog)
+      .then(onCloseDialog)
       .catch(() => setIsLoading(false));
+  };
+
+  const onCloseDialog = () => {
+    resetEntityName();
+    closeDialog();
   };
 
   return (
@@ -71,8 +83,11 @@ const LanguageProficiencyDialog = ({
               margin: "0",
             }}
           >
-            {"Confirm"}
+            {!language ? "add" : "update"}
           </Button>
+          {nameLanguage.length > 0 && (
+            <DeleteLanguages id={userId} closeDialog={closeDialog} />
+          )}
         </DialogActions>
       </form>
     </FormProvider>

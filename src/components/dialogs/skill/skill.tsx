@@ -11,6 +11,12 @@ import { SkillSelect } from "../../molecules/skill-select/skill-select";
 import { SkillCategorySelect } from "../../molecules/skill-category-select/skill-category-select";
 import { SkillMasterySelect } from "../../molecules/skill-mastery-select/skill-mastery-select";
 import { dialogHelpers } from "../../../helpers/form/form.helper";
+import { DeleteSkills } from "../../molecules/delete-skill/delete-skill";
+import {
+  entityNameVar,
+  resetEntityName,
+} from "../../features/isEntity/isEntityName";
+import { useReactiveVar } from "@apollo/client";
 
 enum Mastery {
   Novice = "Novice",
@@ -27,6 +33,7 @@ const SkillMastery = ({
   disableSkillSelect,
   onConfirm,
   closeDialog,
+  userId,
 }: SkillMasteryProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const methods = useForm<SkillFormValues>({
@@ -42,9 +49,16 @@ const SkillMastery = ({
   const onSubmit = (values: SkillFormValues) => {
     setIsLoading(true);
     onConfirm(values)
-      .then(closeDialog)
+      .then(onCloseDialog)
       .catch(() => setIsLoading(false));
   };
+
+  const onCloseDialog = () => {
+    resetEntityName();
+    closeDialog();
+  };
+
+  const nameSkills = useReactiveVar(entityNameVar);
 
   return (
     <FormProvider {...methods}>
@@ -58,7 +72,7 @@ const SkillMastery = ({
           <SkillMasterySelect />
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" color="primary" onClick={closeDialog}>
+          <Button variant="outlined" color="primary" onClick={onCloseDialog}>
             Cancel
           </Button>
           <Button
@@ -69,6 +83,9 @@ const SkillMastery = ({
           >
             {!skill ? "add" : "update"}
           </Button>
+          {nameSkills.length > 0 && (
+            <DeleteSkills id={userId} closeDialog={onCloseDialog} />
+          )}
         </DialogActions>
       </form>
     </FormProvider>

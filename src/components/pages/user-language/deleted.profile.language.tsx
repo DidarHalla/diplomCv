@@ -1,50 +1,47 @@
 import { useReactiveVar } from "@apollo/client";
-import { Button, Container } from "@mui/material";
-import { ReactNode } from "react";
+import { Button, Typography } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import { useProfileLanguageDelete } from "../../../hooks/use-profile-languages";
 import {
   entityNameVar,
   resetEntityName,
-} from "../../features/isEntity/isEntity";
-type BulkDeletionProps = {
-  children?: ReactNode;
-  onDelete(entityIds: string[]): Promise<unknown>;
+} from "../../features/isEntity/isEntityName";
+
+type DeleteLanguagesProps = {
+  closeDialog: () => void;
+  id: string | undefined;
 };
 
-export const DeletedProfileLanguage = ({
-  children,
-  onDelete,
-}: BulkDeletionProps) => {
-  const entityNameLanguage = useReactiveVar(entityNameVar);
+export const DeleteLanguages = ({ closeDialog, id }: DeleteLanguagesProps) => {
+  const nameLanguages = useReactiveVar(entityNameVar);
+  const [deleteProfileLanguage] = useProfileLanguageDelete();
 
-  const handleCancel = () => {
-    resetEntityName();
-  }
+  const delete_languages = (entityNameLanguages: string[]) => {
+    return deleteProfileLanguage({
+      variables: {
+        language: {
+          userId: id || "",
+          name: entityNameLanguages,
+        },
+      },
+    });
+  };
 
-  const handleDeleteCards = () => {
-    onDelete(entityNameLanguage).then(() => {
+  const handleDelete = () => {
+    delete_languages(nameLanguages).then(() => {
       resetEntityName();
+      closeDialog();
     });
   };
 
   return (
     <>
-      {children}
-      {!!entityNameLanguage.length && (
-        <Container>
-          <Button color="secondary" variant="outlined" onClick={handleCancel}>
-            {"Cancel"}
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleDeleteCards}
-            sx={{
-              margin: "0 0 0 10px",
-            }}
-          >
-            {"Delete"}{" "}
-          </Button>
-        </Container>
-      )}
+      <Button
+        onClick={handleDelete}
+        style={{ marginLeft: "15px", color: "red" }}
+      >
+        <Delete color="error" /> <Typography>delete</Typography>
+      </Button>
     </>
   );
 };
